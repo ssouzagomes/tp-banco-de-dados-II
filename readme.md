@@ -1,1 +1,0 @@
-quem leu é gay
