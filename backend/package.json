@@ -1,0 +1,19 @@
+{
+  "name": "backend",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/osuricato/tp-banco-de-dados-II.git"
+  },
+  "author": "Anderson Fernandes, Lucas Almeida e Samuel Souza",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/osuricato/tp-banco-de-dados-II/issues"
+  },
+  "homepage": "https://github.com/osuricato/tp-banco-de-dados-II#readme"
+}
