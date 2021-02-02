@@ -1,20 +1,15 @@
 const express = require('express');
 const bcrypt = require('bcryptjs');
-const jwt = require('jsonwebtoken');
 const crypto = require('crypto');
-const mailer = require('../../modules/mailer');
 
-const authConfig = require('../../config/auth');
-
-const User = require('../models/User');
+const User = require('../models/user');
 
 const router = express.Router();
 
-function generateToken(params = {}) {
-  return jwt.sign(params, authConfig.secret, {
-    expiresIn: 86400,
-  });
-}
+
+router.get('/', (req, res) => {
+  res.send(" "+ User.db.id);
+});
 
 router.post('/register', async (req, res) => {
   const { email } = req.body;
@@ -29,10 +24,10 @@ router.post('/register', async (req, res) => {
 
     return res.send({
       user,
-      token: generateToken({ id: user.id }),
+      token: { id: user.id },
     });
   } catch (err) {
-    return res.status(400).send({ error: 'Registration failed' });
+    return res.status(400).send({ error: '' + err });
   }
 });
 
@@ -51,7 +46,7 @@ router.post('/authenticate', async (req, res) => {
 
   res.send({
     user,
-    token: generateToken({ id: user.id }),
+    token: { id: user.id },
   });
 });
 
@@ -64,8 +59,6 @@ router.post('/forgot_password', async (req, res) => {
     if (!user)
       return res.status(400).send({ error: 'User not found' });
 
-    const token = crypto.randomBytes(20).toString('hex');
-
     const now = new Date();
     now.setHours(now.getHours() + 1);
 
@@ -75,18 +68,6 @@ router.post('/forgot_password', async (req, res) => {
         passwordResetExpires: now,
       }
     });
-
-    mailer.sendMail({
-      to: email,
-      from: 'diego@rocketseat.com.br',
-      template: 'auth/forgot_password',
-      context: { token },
-    }, (err) => {
-      if (err)
-        return res.status(400).send({ error: 'Cannot send forgot password email' });
-
-      return res.send();
-    })
   } catch (err) {
     res.status(400).send({ error: 'Error on forgot password, try again' });
   }
@@ -120,4 +101,4 @@ router.post('/reset_password', async (req, res) => {
   }
 });
 
-module.exports = app => app.use('/auth', router);
+module.exports = app => app.use('/', router);

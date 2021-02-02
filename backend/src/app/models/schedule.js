@@ -1,13 +1,13 @@
 const mongoose = require('../../database');
 const bcrypt = require('bcryptjs');
 
-const ProjectSchema = new mongoose.Schema({
-  title: {
-    type: String,
+const ScheduleSchema = new mongoose.Schema({
+  endDate: {
+    type: Date,
     require: true,
   },
-  description: {
-    type: String,
+  startDate: {
+    type: Date,
     require: true,
   },
   user: {
@@ -15,9 +15,10 @@ const ProjectSchema = new mongoose.Schema({
     ref: 'User',
     require: true,
   },
-  tasks: [{
+  vehicle: [{
     type: mongoose.Schema.Types.ObjectId,
-    ref: 'Task',
+    ref: 'Vehicle',
+    require: true,
   }],
   createdAt: {
     type: Date,
@@ -25,6 +26,6 @@ const ProjectSchema = new mongoose.Schema({
   },
 });
 
-const Project = mongoose.model('Project', ProjectSchema);
+const Schedule = mongoose.model('Schedule', ScheduleSchema);
 
-module.exports = Project;
+module.exports = Schedule;
