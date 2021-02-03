@@ -1,4 +1,5 @@
 import React from 'react';
+import { Link } from 'react-router-dom'
 import {
   ContentContainer,
   Content,
@@ -24,9 +25,11 @@ const Welcome: React.FC = () => {
           </h3>
 
           <ButtonsContainer>
-            <button id="login" name="login" onClick= {() => {}}>
-              Entrar
-            </button>
+            <Link to="entrar">
+              <button id="login" name="login" onClick= {() => {}}>
+                Entrar
+              </button>
+            </Link>
 
             <button id="register" name="register" onClick= {() => {}}>
               Cadastrar
