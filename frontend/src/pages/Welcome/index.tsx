@@ -5,9 +5,12 @@ import {
   ButtonsContainer
 } from './styles';
 
+
 import Logo from '../../assets/Logo.svg'
 
+
 const Welcome: React.FC = () => {
+
 
   return (
     <>
