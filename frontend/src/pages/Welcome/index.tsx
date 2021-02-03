@@ -26,14 +26,16 @@ const Welcome: React.FC = () => {
 
           <ButtonsContainer>
             <Link to="entrar">
-              <button id="login" name="login" onClick= {() => {}}>
+              <button id="login" name="login">
                 Entrar
               </button>
             </Link>
 
-            <button id="register" name="register" onClick= {() => {}}>
-              Cadastrar
-            </button>
+            <Link to="cadastrar">
+              <button id="register" name="register">
+                Cadastrar
+              </button>
+            </Link>
           </ButtonsContainer>
         </Content>
       </ContentContainer>

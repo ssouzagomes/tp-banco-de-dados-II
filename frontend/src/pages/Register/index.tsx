@@ -2,39 +2,43 @@ import React, {useRef, useCallback} from 'react';
 import { Link, useHistory } from 'react-router-dom'
 import { FormHandles } from '@unform/core';
 import { Form } from '@unform/web';
-import { FiArrowLeft, FiMail, FiLock } from "react-icons/fi";
+import { FiArrowLeft, FiUser, FiMail, FiLock } from "react-icons/fi";
 import * as Yup from 'yup';
 
 import Button from '../../components/Button/index'
+// import api from '../../../../backend/src/app/controllers/authController'
 
 import {
   ContentContainer,
   Content,
   BackButton,
   FormContainer,
+  InputName,
   InputEmail,
   InputPassword,
-  ForgotPasswordContainer,
+  InputConfirmPassword,
   ButtonContainer
 } from './styles';
 
-interface LoginFormData {
+interface UserFormData {
+  name: string;
   email: string;
   password: string;
 }
 
-const Login: React.FC = () => {
+const Register: React.FC = () => {
 
   const formRef = useRef<FormHandles>(null);
   const history = useHistory();
 
   const handleSubmit = useCallback(
-    async (data: LoginFormData) => {
+    async (data: UserFormData) => {
       try {
         formRef.current?.setErrors({});
-
+ 
         const schema = Yup.object().shape({
-          email: Yup.string().required('Email obrigatório'),
+          name: Yup.string().required('Nome obrigatório.'),
+          email: Yup.string().email().required('Email obrigatório.'),
           password: Yup.string().required('Senha obrigatória.'),
         });
 
@@ -42,12 +46,13 @@ const Login: React.FC = () => {
           abortEarly: false,
         });
 
-        // await signIn({
-        //   email: data.email,
-        //   password: data.password,
-        // });
+        await api.post('register', {
+          name: data.name,
+          email: data.email,
+          password: data.password
+        })
 
-        history.push('/');
+        // history.push('/');
       } catch (error) {
         if (error instanceof Yup.ValidationError) {
           console.log(error)
@@ -72,15 +77,30 @@ const Login: React.FC = () => {
             </Link>
           </BackButton>
 
-          <h1>Estamos quase lá.</h1>
+          <h1>Crie a sua conta.</h1>
 
           <h3>
-            Faça seu login para começar <br/>
-            uma experiência incrível.
+            Faça o seu cadastro de forma <br/>
+            rápida e fácil.
           </h3>
 
           <Form ref={formRef} onSubmit={handleSubmit}>
             <FormContainer>
+            <InputName>
+                <div>
+                  <FiUser
+                    size={23}
+                    color={'#7A7A80'}
+                  />
+                </div>
+
+                <input
+                  type="name"
+                  name="name"
+                  placeholder="Nome"
+                />
+              </InputName>
+
               <InputEmail>
                 <div>
                   <FiMail
@@ -111,14 +131,23 @@ const Login: React.FC = () => {
                 />
               </InputPassword>
 
-              <ForgotPasswordContainer>
-                <Link to='#'>
-                  Esqueci minha senha
-                </Link>
-              </ForgotPasswordContainer>
+              {/* <InputConfirmPassword>
+                <div>    
+                  <FiLock
+                    size={23}
+                    color={'#7A7A80'}
+                  />
+                </div>
+                
+                <input
+                  type="password"
+                  name="password"
+                  placeholder="Confirmar senha"
+                />
+              </InputConfirmPassword> */}
               
               <ButtonContainer>
-                <Button type="submit">Entrar</Button>
+                <Button type="submit">Cadastrar</Button>
               </ButtonContainer>
             </FormContainer>
           </Form>
@@ -127,4 +156,4 @@ const Login: React.FC = () => {
     </>
   );
 };
-export default Login;
+export default Register;

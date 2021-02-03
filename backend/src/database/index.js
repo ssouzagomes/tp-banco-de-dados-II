@@ -3,9 +3,9 @@ const mongoose = require('mongoose');
 const uri = "mongodb+srv://admin:admin@cluster0.tauho.mongodb.net/rentx?retryWrites=true&w=majority";
 try {
     mongoose.connect( uri, {useNewUrlParser: true, useUnifiedTopology: true}, () =>
-    console.log("connected"));    
+    console.log("Server started at port 3333!"));    
     } catch (error) { 
-    console.log("could not connect");    
+    console.log("Could not connect!");    
 }
 
 mongoose.Promise = global.Promise;
