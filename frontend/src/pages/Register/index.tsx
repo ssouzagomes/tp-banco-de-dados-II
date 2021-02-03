@@ -16,7 +16,6 @@ import {
   InputName,
   InputEmail,
   InputPassword,
-  InputConfirmPassword,
   ButtonContainer
 } from './styles';
 
@@ -46,11 +45,11 @@ const Register: React.FC = () => {
           abortEarly: false,
         });
 
-        await api.post('register', {
-          name: data.name,
-          email: data.email,
-          password: data.password
-        })
+        // await api.post('register', {
+        //   name: data.name,
+        //   email: data.email,
+        //   password: data.password
+        // })
 
         // history.push('/');
       } catch (error) {
@@ -130,21 +129,6 @@ const Register: React.FC = () => {
                   placeholder="Senha"
                 />
               </InputPassword>
-
-              {/* <InputConfirmPassword>
-                <div>    
-                  <FiLock
-                    size={23}
-                    color={'#7A7A80'}
-                  />
-                </div>
-                
-                <input
-                  type="password"
-                  name="password"
-                  placeholder="Confirmar senha"
-                />
-              </InputConfirmPassword> */}
               
               <ButtonContainer>
                 <Button type="submit">Cadastrar</Button>
