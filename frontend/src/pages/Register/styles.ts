@@ -24,7 +24,7 @@ export const Content = styled.div`
     color: #7A7A80;
     text-align: center;
     line-height: 32px;
-    margin-bottom: 48px
+    margin-bottom: 32px
   }
 
   input {
@@ -32,7 +32,7 @@ export const Content = styled.div`
     border-radius: 4px;
     padding-left: 6px;
     margin-left: 4px;
-    margin-bottom: 16px;
+    margin-bottom: 8px;
 
     width: 256px;
     height: 48px;
@@ -52,6 +52,23 @@ export const FormContainer = styled.div`
   display: flex;
   flex-direction: column;
   justify-content: center;
+`
+
+export const InputName = styled.div`
+  display: flex;
+  flex-direction: row;
+
+  div {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    border-radius: 4px;
+
+    width: 48px;
+    height: 48px;
+    background-color: #F2F2FA;
+  }
 `
 
 export const InputEmail = styled.div`
@@ -85,19 +102,6 @@ export const InputPassword = styled.div`
     width: 48px;
     height: 48px;
     background-color: #F2F2FA;
-  }
-`
-
-export const ForgotPasswordContainer = styled.div`
-  width: 308px;
-  
-  display: flex;
-  justify-content: flex-end;
-
-  a {
-    text-decoration: none;
-    color: #737380;
-    font-size: 14px;
   }
 `
 
