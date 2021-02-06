@@ -3,7 +3,7 @@ import styled from 'styled-components';
 export const Container = styled.header`
     background-color: #1B1B1F;
     height: 3.4rem;
-    width: 100%;
+    max-width: 100%;
     padding-left: 2.4rem;
     justify-content: space-between;
 
