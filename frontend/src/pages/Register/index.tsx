@@ -6,7 +6,7 @@ import { FiArrowLeft, FiUser, FiMail, FiLock } from "react-icons/fi";
 import * as Yup from 'yup';
 
 import Button from '../../components/Button/index'
-import api from '../../../../backend/src/services/api'
+import api from '../../services/api'
 
 import {
   ContentContainer,
@@ -34,16 +34,16 @@ const Register: React.FC = () => {
     async (data: UserFormData) => {
       try {
         formRef.current?.setErrors({});
- 
-        const schema = Yup.object().shape({
-          name: Yup.string().required('Nome obrigatório.'),
-          email: Yup.string().email().required('Email obrigatório.'),
-          password: Yup.string().required('Senha obrigatória.'),
-        });
 
-        await schema.validate(data, {
-          abortEarly: false,
-        });
+        // const schema = Yup.object().shape({
+        //   name: Yup.string().required('Nome obrigatório.'),
+        //   email: Yup.string().email().required('Email obrigatório.'),
+        //   password: Yup.string().required('Senha obrigatória.'),
+        // });
+
+        // await schema.validate(data, {
+        //   abortEarly: false,
+        // });
 
         await api.post('register', {
           name: data.name,
@@ -56,7 +56,9 @@ const Register: React.FC = () => {
         //   title: `Usuário ${data.name} criado com sucesso!`,
         // });
 
-        history.push('/');
+        console.log("Usuário cadastrado!")
+
+        history.push('/home');
       } catch (error) {
         if (error instanceof Yup.ValidationError) {
           console.log(error)
