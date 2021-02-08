@@ -6,7 +6,7 @@ import { FiArrowLeft, FiUser, FiMail, FiLock } from "react-icons/fi";
 import * as Yup from 'yup';
 
 import Button from '../../components/Button/index'
-// import api from '../../../../backend/src/app/controllers/authController'
+import api from '../../../../backend/src/services/api'
 
 import {
   ContentContainer,
@@ -45,13 +45,18 @@ const Register: React.FC = () => {
           abortEarly: false,
         });
 
-        // await api.post('register', {
-        //   name: data.name,
-        //   email: data.email,
-        //   password: data.password
-        // })
+        await api.post('register', {
+          name: data.name,
+          email: data.email,
+          password: data.password
+        })
 
-        // history.push('/');
+        // addToast({
+        //   type: 'success',
+        //   title: `Usuário ${data.name} criado com sucesso!`,
+        // });
+
+        history.push('/');
       } catch (error) {
         if (error instanceof Yup.ValidationError) {
           console.log(error)
