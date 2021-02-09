@@ -11,7 +11,7 @@ async function createSchedule(req, res){
         if(!selectedListing || !currentUser)
         return res.status(400).send({ error: 'Something went wrong...' });
 
-        if( await Schedule.findOne({ user } ))
+        if( await Schedule.findOne({ currentUser } )) //resolve essa porra
             return res.status(400).send({ error: 'User already scheduled' });
         
         const schedule = await Schedule.create(selectedListing, currentUser);
@@ -29,7 +29,7 @@ async function showSchedules(req, res){
         if(!currentUser)
             return res.status(400).send({ error: 'Something went wrong...' });
         
-        const schedules = await Schedule.findOne({ user });
+        const schedules = await Schedule.findOne({ currentUser });
 
         if(!schedules)
             return res.status(400).send({ error: 'No schedules' });

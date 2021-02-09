@@ -24,4 +24,8 @@ router.post('/reset_password', async (req, res) => {
     auth.reset_password(req,res);
 });
 
+router.get('/show_users', async (req, res) => {
+    auth.showUsers(req,res);
+});
+
 module.exports = app => app.use('/', router);

@@ -1,7 +1,7 @@
 const User = require('../models/user');
 const loggedUser = undefined;
 
-async function register(req, res) {
+exports.register= function(req,res) {
   const { email } = req.body;
 
   try {
@@ -21,7 +21,7 @@ async function register(req, res) {
   }
 };
 
-async function authenticate(req, res) {
+exports.authenticate= function(req,res) {
   const { email, password } = req.body;
 
   const loggedUser = await User.findOne({ email }).select('+password');
@@ -40,7 +40,7 @@ async function authenticate(req, res) {
   });
 };
 
-async function forgot_password(req, res) {
+exports.forgot_password= function(req,res) {
   const { email } = req.body;
 
   try {
@@ -63,7 +63,7 @@ async function forgot_password(req, res) {
   }
 };
 
-async function reset_password(req, res) {
+exports.reset_password= function(req,res) {
   const { email, token, password } = req.body;
 
   try {
@@ -91,7 +91,7 @@ async function reset_password(req, res) {
   }
 };
 
-async function modifyUser(req, res) {
+exports.modifyUser= function(req,res) {
   try {
     User.findByIdAndUpdate(loggedUser.id, req.body);
   } catch (err) {
@@ -100,3 +100,8 @@ async function modifyUser(req, res) {
 
 };
 
+exports.showUsers= function(req,res){
+  
+  return res.send(User.find().where({}));
+
+}
