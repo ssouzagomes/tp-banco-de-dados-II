@@ -15,9 +15,9 @@ const ScheduleSchema = new mongoose.Schema({
     ref: 'User',
     require: true,
   },
-  vehicle: [{
+  listing: [{
     type: mongoose.Schema.Types.ObjectId,
-    ref: 'Vehicle',
+    ref: 'Listing',
     require: true,
   }],
   createdAt: {

@@ -1,17 +1,7 @@
-const express = require('express');
-const bcrypt = require('bcryptjs');
-const crypto = require('crypto');
-
 const User = require('../models/user');
+const loggedUser = undefined;
 
-const router = express.Router();
-
-
-router.get('/', (req, res) => {
-  res.send(" "+ User.db.id);
-});
-
-router.post('/register', async (req, res) => {
+async function register(req, res) {
   const { email } = req.body;
 
   try {
@@ -29,28 +19,28 @@ router.post('/register', async (req, res) => {
   } catch (err) {
     return res.status(400).send({ error: '' + err });
   }
-});
+};
 
-router.post('/authenticate', async (req, res) => {
+async function authenticate(req, res) {
   const { email, password } = req.body;
 
-  const user = await User.findOne({ email }).select('+password');
+  const loggedUser = await User.findOne({ email }).select('+password');
 
-  if (!user)
+  if (!loggedUser)
     return res.status(400).send({ error: 'User not found' });
 
-  if (!await bcrypt.compare(password, user.password))
+  if (!await bcrypt.compare(password, loggedUser.password))
     return res.status(400).send({ error: 'Invalid password' });
 
-  user.password = undefined;
+  loggedUser.password = undefined;
 
   res.send({
-    user,
+    loggedUser,
     token: { id: user.id },
   });
-});
+};
 
-router.post('/forgot_password', async (req, res) => {
+async function forgot_password(req, res) {
   const { email } = req.body;
 
   try {
@@ -71,9 +61,9 @@ router.post('/forgot_password', async (req, res) => {
   } catch (err) {
     res.status(400).send({ error: 'Error on forgot password, try again' });
   }
-});
+};
 
-router.post('/reset_password', async (req, res) => {
+async function reset_password(req, res) {
   const { email, token, password } = req.body;
 
   try {
@@ -99,6 +89,14 @@ router.post('/reset_password', async (req, res) => {
   } catch (err) {
     res.status(400).send({ error: 'Cannot reset password, try again' });
   }
-});
+};
 
-module.exports = app => app.use('/', router);
+async function modifyUser(req, res) {
+  try {
+    User.findByIdAndUpdate(loggedUser.id, req.body);
+  } catch (err) {
+    return res.status(400).send({ error: '' + err });
+  }
+
+};
+
