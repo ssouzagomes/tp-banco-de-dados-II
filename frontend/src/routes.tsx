@@ -5,6 +5,7 @@ import Welcome from './pages/Welcome'
 import Home from './pages/Home';
 import Login from './pages/Login'
 import Register from './pages/Register'
+import Listening from './pages/Listing'
 
 const Routes = () => {
   return (
@@ -13,6 +14,8 @@ const Routes = () => {
       <Route component={Home} path="/home" exact />
       <Route component={Login} path="/entrar" />
       <Route component={Register} path="/cadastrar" />
+      <Route component={Listening} path="/listing" />
+      
     </BrowserRouter>
   )
 }

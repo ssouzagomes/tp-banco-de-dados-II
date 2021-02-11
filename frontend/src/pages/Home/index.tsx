@@ -1,12 +1,12 @@
 import React, { useState, useRef } from 'react';
 import { FormHandles } from '@unform/core';
-import { Link } from 'react-router-dom';
+import DayPickerInput from 'react-day-picker/DayPickerInput';
+import 'react-day-picker/lib/style.css';
 
-import { Container, Title, Filter, FormSearch } from './styles';
+import { Container, Title, Filter, FormSearch, Header } from './styles';
 
 
 import NavBar from '../../components/NavBar';
-import Header from '../../components/Header';
 import Items from '../../components/Items';
 
 import Select from '../../components/SimpleSelect';
@@ -42,8 +42,30 @@ const Home: React.FC = () => {
 
     return (
         <Container>
-            <NavBar/>
-            <Header/>
+        <NavBar/>
+        <Header>
+        <div className="de">
+            <p>DE</p>
+            <DayPickerInput
+                dayPickerProps={{
+                    month: new Date(Date.now()),
+                    showWeekNumbers: true, 
+                }}
+            />
+        </div>
+
+        <div className="ate">
+            <p>ATÉ</p>
+            <DayPickerInput
+                dayPickerProps={{
+                    month: new Date(Date.now()),
+                    showWeekNumbers: true,
+                    
+                }}
+            />
+        </div>
+
+        </Header>
             <Title>
                 <h1>Resultados</h1>
                 <span>4 Carros</span>
@@ -83,6 +105,9 @@ const Home: React.FC = () => {
             </Filter>
                     
             <main>
+            
+                <Items/>
+                <Items/>
                 <Items/>
 
             </main>

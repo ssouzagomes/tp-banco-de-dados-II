@@ -18,9 +18,41 @@ export const Container = styled.div`
         main {
             padding: 3.2rem 0;
             margin: 0 auto;
+
+            display: grid;
+            grid-template-columns: repeat(3, 360px);
+            width: 100%;
+            padding: 4.8rem;
         }
     }
 
+`;
+
+export const Header = styled.header`
+     max-width: 100%;
+    height: 12rem;
+    background-color: #F4F5F6;
+    display: flex;
+    align-items: center;
+    flex-direction: row;
+    padding: 60px;
+
+    .ate {
+        margin-left: 40px;
+    }
+
+    input {
+        width: 12.4rem;
+        height: 2.1rem;
+
+        font-family: 'Archivo';
+        font-weight: 400;
+        font-size: 14pt;
+        padding-left: 0.8rem;
+        border-radius: 0.6rem;
+        border: none;
+        margin-top: 0.6rem;
+    }
 `;
 
 export const Title = styled.div`
@@ -106,10 +138,7 @@ export const FormSearch = styled(Unform)`
    
 `;
 
-/* export const Content = styled.div`
-    display: grid;
-    grid-template-columns: repeat(3, 360px);
-    width: 100%;
-    padding: 4.8rem;
-`; */
+export const Content = styled.div`
+   
+`; 
 
