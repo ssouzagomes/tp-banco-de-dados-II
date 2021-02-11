@@ -1,13 +1,15 @@
-import React, { useCallback } from 'react';
+import React, {useRef, useCallback} from 'react';
 import { Link, useHistory } from 'react-router-dom'
+import { FormHandles } from '@unform/core';
 import { Form } from '@unform/web';
 import { FiArrowLeft, FiUser, FiMail, FiLock } from "react-icons/fi";
+import * as Yup from 'yup';
 
 import Button from '../../components/Button/index'
 import InputForm from '../../components/InputForm';
-import { useToast } from '../../hooks/toast';
 
 import api from '../../services/api'
+
 
 import {
   ContentContainer,
@@ -24,13 +26,23 @@ interface UserFormData {
 }
 
 const Register: React.FC = () => {
+  const formRef = useRef<FormHandles>(null);
   const history = useHistory();
-  const { addToast } = useToast();
 
   const handleSubmit = useCallback(
     async (data: UserFormData) => {
       try {
-        console.log(data)
+        formRef.current?.setErrors({});
+
+        const schema = Yup.object().shape({
+          name: Yup.string().required('Nome obrigatório.'),
+          email: Yup.string().required('Email obrigatório.'),
+          password: Yup.string().required('Senha obrigatória.'),
+        });
+
+        await schema.validate(data, {
+          abortEarly: false,
+        });
 
         await api.post('register', {
           name: data.name,
@@ -38,19 +50,15 @@ const Register: React.FC = () => {
           password: data.password
         })
 
-        addToast({
-          type: 'success',
-          title: `Usuário ${data.name} criado com sucesso!`,
-        });
-
-        console.log("Usuário cadastrado!")
-
+        alert('Usuário cadastrado com sucesso!')
         history.push('/home');
       } catch (error) {
-        console.log(error)
+        if (error instanceof Yup.ValidationError) {
+          console.log(error)
+        }
       }
     },
-    [history, addToast],
+    [history],
   );
 
   return (
@@ -75,7 +83,7 @@ const Register: React.FC = () => {
             rápida e fácil.
           </h3>
 
-          <Form onSubmit={handleSubmit}>
+          <Form ref={formRef} onSubmit={handleSubmit}>
             <FormContainer>
               <InputForm
                 name="name"
