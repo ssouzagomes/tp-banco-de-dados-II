@@ -54,57 +54,6 @@ export const FormContainer = styled.div`
   justify-content: center;
 `
 
-export const InputName = styled.div`
-  display: flex;
-  flex-direction: row;
-
-  div {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-
-    border-radius: 4px;
-
-    width: 48px;
-    height: 48px;
-    background-color: #F2F2FA;
-  }
-`
-
-export const InputEmail = styled.div`
-  display: flex;
-  flex-direction: row;
-
-  div {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-
-    border-radius: 4px;
-
-    width: 48px;
-    height: 48px;
-    background-color: #F2F2FA;
-  }
-`
-
-export const InputPassword = styled.div`
-  display: flex;
-  flex-direction: row;
-
-  div {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-
-    border-radius: 4px;
-
-    width: 48px;
-    height: 48px;
-    background-color: #F2F2FA;
-  }
-`
-
 export const ButtonContainer = styled.div`
   display: flex;
   justify-content: center;

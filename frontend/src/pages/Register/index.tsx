@@ -1,11 +1,12 @@
-import React, {useRef, useCallback} from 'react';
+import React, { useCallback } from 'react';
 import { Link, useHistory } from 'react-router-dom'
-import { FormHandles } from '@unform/core';
 import { Form } from '@unform/web';
 import { FiArrowLeft, FiUser, FiMail, FiLock } from "react-icons/fi";
-import * as Yup from 'yup';
 
 import Button from '../../components/Button/index'
+import InputForm from '../../components/InputForm';
+import { useToast } from '../../hooks/toast';
+
 import api from '../../services/api'
 
 import {
@@ -13,9 +14,6 @@ import {
   Content,
   BackButton,
   FormContainer,
-  InputName,
-  InputEmail,
-  InputPassword,
   ButtonContainer
 } from './styles';
 
@@ -26,24 +24,13 @@ interface UserFormData {
 }
 
 const Register: React.FC = () => {
-
-  const formRef = useRef<FormHandles>(null);
   const history = useHistory();
+  const { addToast } = useToast();
 
   const handleSubmit = useCallback(
     async (data: UserFormData) => {
       try {
-        formRef.current?.setErrors({});
-
-        // const schema = Yup.object().shape({
-        //   name: Yup.string().required('Nome obrigatório.'),
-        //   email: Yup.string().email().required('Email obrigatório.'),
-        //   password: Yup.string().required('Senha obrigatória.'),
-        // });
-
-        // await schema.validate(data, {
-        //   abortEarly: false,
-        // });
+        console.log(data)
 
         await api.post('register', {
           name: data.name,
@@ -51,21 +38,19 @@ const Register: React.FC = () => {
           password: data.password
         })
 
-        // addToast({
-        //   type: 'success',
-        //   title: `Usuário ${data.name} criado com sucesso!`,
-        // });
+        addToast({
+          type: 'success',
+          title: `Usuário ${data.name} criado com sucesso!`,
+        });
 
         console.log("Usuário cadastrado!")
 
         history.push('/home');
       } catch (error) {
-        if (error instanceof Yup.ValidationError) {
-          console.log(error)
-        }
+        console.log(error)
       }
     },
-    [history],
+    [history, addToast],
   );
 
   return (
@@ -90,53 +75,34 @@ const Register: React.FC = () => {
             rápida e fácil.
           </h3>
 
-          <Form ref={formRef} onSubmit={handleSubmit}>
+          <Form onSubmit={handleSubmit}>
             <FormContainer>
-            <InputName>
-                <div>
-                  <FiUser
-                    size={23}
-                    color={'#7A7A80'}
-                  />
-                </div>
+              <InputForm
+                name="name"
+                icon={FiUser}
+                required={true}
+                labelName="Nome"
+                placeholder="Nome"
+              />
 
-                <input
-                  type="name"
-                  name="name"
-                  placeholder="Nome"
-                />
-              </InputName>
-
-              <InputEmail>
-                <div>
-                  <FiMail
-                    size={23}
-                    color={'#7A7A80'}
-                  />
-                </div>
-
-                <input
-                  type="email"
-                  name="email"
-                  placeholder="Email"
-                />
-              </InputEmail>
-              
-              <InputPassword>
-                <div>    
-                  <FiLock
-                    size={23}
-                    color={'#7A7A80'}
-                  />
-                </div>
+              <InputForm
+                name="email"
+                type="email"
+                icon={FiMail}
+                required={true}
+                labelName="Email"
+                placeholder="Email"
+              />
                 
-                <input
-                  type="password"
-                  name="password"
-                  placeholder="Senha"
-                />
-              </InputPassword>
-              
+              <InputForm
+                name="password"
+                type="password"
+                icon={FiLock}
+                required={true}
+                labelName="Senha"
+                placeholder="Senha"
+              />
+
               <ButtonContainer>
                 <Button type="submit">Cadastrar</Button>
               </ButtonContainer>
