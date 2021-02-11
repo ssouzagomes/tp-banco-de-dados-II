@@ -6,10 +6,10 @@ const ListingSchema = new mongoose.Schema({
     type: Number,
     require: true,
   },
-  vehicle: [{
+  vehicle: {
     type: mongoose.Schema.Types.ObjectId,
     ref: 'Vehicle',
-  }],
+  },
   startDate: {
     type: Date,
     required: true,
