@@ -1,5 +1,5 @@
 const mongoose = require('../../database');
-const bcrypt = require('bcryptjs');
+const User = require('./user');
 
 const ListingSchema = new mongoose.Schema({
   price: {
@@ -18,10 +18,15 @@ const ListingSchema = new mongoose.Schema({
     type: Date,
     required: true,
   },
+  creator: {
+    type: mongoose.Schema.Types.ObjectId,
+    ref: 'User',
+    required: true,
+  },
   createdAt: {
     type: Date,
     default: Date.now,
-  },
+  }
 });
 
 const Listing = mongoose.model('Listing', ListingSchema);

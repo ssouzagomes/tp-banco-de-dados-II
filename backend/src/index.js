@@ -8,7 +8,7 @@ app.use(cors());
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
 
-require('./app/controllers/index')(app);
+require('./app/controllers/routes')(app);
 
 app.listen(3333, () => {
   console.log('Server started on PORT 3333!');

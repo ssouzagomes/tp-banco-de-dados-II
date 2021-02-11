@@ -1,5 +1,4 @@
 const mongoose = require('../../database');
-const bcrypt = require('bcryptjs');
 
 const VehicleSchema = new mongoose.Schema({
   model: {
@@ -36,6 +35,6 @@ const VehicleSchema = new mongoose.Schema({
   },
 });
 
-const Vehicle = mongoose.model('Vehicle', TaskSchema);
+const Vehicle = mongoose.model('Vehicle', VehicleSchema);
 
 module.exports = Vehicle;
