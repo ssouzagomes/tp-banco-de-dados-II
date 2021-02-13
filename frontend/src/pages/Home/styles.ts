@@ -29,13 +29,23 @@ export const Container = styled.div`
 `;
 
 export const Header = styled.header`
-     max-width: 100%;
+    max-width: 100%;
     height: 12rem;
     background-color: #F4F5F6;
     display: flex;
     align-items: center;
-    flex-direction: row;
-    padding: 60px;
+    flex-direction: column;
+    padding: 32px;
+
+    h1 {
+        color: #1B1B1F;
+        margin-bottom: 24px;
+    }
+
+    .date {
+        display: flex;
+        flex-direction: row;
+    }
 
     .ate {
         margin-left: 40px;

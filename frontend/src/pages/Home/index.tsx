@@ -44,76 +44,76 @@ const Home: React.FC = () => {
         <Container>
         <NavBar/>
         <Header>
-        <div className="de">
-            <p>DE</p>
-            <DayPickerInput
-                dayPickerProps={{
-                    month: new Date(Date.now()),
-                    showWeekNumbers: true, 
-                }}
-            />
-        </div>
+            <h1>Escolha uma data e encontre os carros disponíveis</h1>
 
-        <div className="ate">
-            <p>ATÉ</p>
-            <DayPickerInput
-                dayPickerProps={{
-                    month: new Date(Date.now()),
-                    showWeekNumbers: true,
-                    
-                }}
-            />
-        </div>
+            <div className="date">
+                <div className="de">
+                    <p>DE</p>
+                    <DayPickerInput
+                        dayPickerProps={{
+                            month: new Date(Date.now()),
+                            showWeekNumbers: true, 
+                        }}
+                    />
+                </div>
 
+                <div className="ate">
+                    <p>ATÉ</p>
+                    <DayPickerInput
+                        dayPickerProps={{
+                            month: new Date(Date.now()),
+                            showWeekNumbers: true,
+                            
+                        }}
+                    />
+                </div>
+            </div>
         </Header>
-            <Title>
-                <h1>Resultados</h1>
-                <span>4 Carros</span>
-            </Title>
-            <Filter>
-                <h2>
-                    Filtros:
-                </h2>
-                <span>Limpar todos</span>
-                <FormSearch ref={formRef} onSubmit={() => {}}>
-                    <Select
-                        name="pricePerDay"
-                        label="Preço ao dia"
-                        placeholder="Selecione"
-                        options={pricePerDay}
-                    />
 
-                    <Select
-                        name="fuel"
-                        label="Combustível"
-                        placeholder="Selecione"
-                        options={fuel}
-                    />
+        <Title>
+            <h1>Resultados</h1>
+            <span>4 Carros</span>
+        </Title>
+        <Filter>
+            <h2>
+                Filtros:
+            </h2>
+            <span>Limpar todos</span>
+            <FormSearch ref={formRef} onSubmit={() => {}}>
+                <Select
+                    name="pricePerDay"
+                    label="Preço ao dia"
+                    placeholder="Selecione"
+                    options={pricePerDay}
+                />
 
-                    <Select
-                        name="transmissionfilter"
-                        label="Transmissão"
-                        placeholder="Selecione"
-                        options={transmissionFilter}
-                    />
+                <Select
+                    name="fuel"
+                    label="Combustível"
+                    placeholder="Selecione"
+                    options={fuel}
+                />
 
-                    <button type="submit">
-                        Confirmar
-                    </button>
+                <Select
+                    name="transmissionfilter"
+                    label="Transmissão"
+                    placeholder="Selecione"
+                    options={transmissionFilter}
+                />
 
-                </FormSearch>
-            </Filter>
+                <button type="submit">
+                    Confirmar
+                </button>
+
+            </FormSearch>
+        </Filter>
                     
-            <main>
-            
-                <Items/>
-                <Items/>
-                <Items/>
-
-            </main>
-        </Container>
-         
-        
+        <main>
+            <Items/>
+            <Items/>
+            <Items/>
+        </main>
+    </Container>
     );
 }
 

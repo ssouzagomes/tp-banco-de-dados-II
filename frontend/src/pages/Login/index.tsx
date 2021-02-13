@@ -6,14 +6,13 @@ import { FiArrowLeft, FiMail, FiLock } from "react-icons/fi";
 import * as Yup from 'yup';
 
 import Button from '../../components/Button/index'
+import InputForm from '../../components/InputForm';
 
 import {
   ContentContainer,
   Content,
   BackButton,
   FormContainer,
-  InputEmail,
-  InputPassword,
   ForgotPasswordContainer,
   ButtonContainer
 } from './styles';
@@ -47,7 +46,7 @@ const Login: React.FC = () => {
         //   password: data.password,
         // });
 
-        history.push('/');
+        history.push('/home');
       } catch (error) {
         if (error instanceof Yup.ValidationError) {
           console.log(error)
@@ -81,35 +80,23 @@ const Login: React.FC = () => {
 
           <Form ref={formRef} onSubmit={handleSubmit}>
             <FormContainer>
-              <InputEmail>
-                <div>
-                  <FiMail
-                    size={23}
-                    color={'#7A7A80'}
-                  />
-                </div>
-
-                <input
-                  type="email"
-                  name="email"
-                  placeholder="Email"
-                />
-              </InputEmail>
-              
-              <InputPassword>
-                <div>    
-                  <FiLock
-                    size={23}
-                    color={'#7A7A80'}
-                  />
-                </div>
+            <InputForm
+                name="email"
+                type="email"
+                icon={FiMail}
+                required={true}
+                labelName="Email"
+                placeholder="Email"
+              />
                 
-                <input
-                  type="password"
-                  name="password"
-                  placeholder="Senha"
-                />
-              </InputPassword>
+              <InputForm
+                name="password"
+                type="password"
+                icon={FiLock}
+                required={true}
+                labelName="Senha"
+                placeholder="Senha"
+              />
 
               <ForgotPasswordContainer>
                 <Link to='#'>
