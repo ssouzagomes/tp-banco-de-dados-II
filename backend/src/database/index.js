@@ -1,4 +1,5 @@
 const mongoose = require('mongoose');
+mongoose.set('useCreateIndex', true);
 
 const uri = "mongodb+srv://admin:admin@cluster0.tauho.mongodb.net/rentx?retryWrites=true&w=majority";
 try {
