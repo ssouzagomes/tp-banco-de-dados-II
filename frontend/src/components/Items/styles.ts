@@ -3,16 +3,12 @@ import styled from 'styled-components';
 export const Container = styled.div`
     width: 20rem;
     height: 12rem;
-    margin-bottom: 30px;
     cursor: pointer;
     background-color: #EBEBF0;
-    border-radius: 8px;
+    border-radius: 4px;
     padding: 0.8rem;
     transition: border 0.2s;
     
-    
-    
-
     &:hover {
         border: solid 2px  #DC1637;
     }

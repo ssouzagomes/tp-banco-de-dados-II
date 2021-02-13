@@ -5,6 +5,7 @@ import Home from './pages/Home';
 import Login from './pages/Login'
 import Register from './pages/Register'
 import Listening from './pages/Listing'
+import Schedule from './pages/Schedule'
 
 const Routes = () => {
   return (
@@ -14,6 +15,7 @@ const Routes = () => {
       <Route component={Login} path="/entrar" />
       <Route component={Register} path="/cadastrar" />
       <Route component={Listening} path="/listing" />
+      <Route component={Schedule} path="/schedule" />
       
     </BrowserRouter>
   )

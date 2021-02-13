@@ -12,15 +12,15 @@ const NavBar: React.FC = () => {
     return (
         <Container>
             <div>
-            <Link to="#">
+            <Link to="/home">
                 <img src={House} alt="House"/>
             </Link>
 
-            <Link to="#">
+            <Link to="/listing">
                 <img src={Car} alt="Car"/>
             </Link>
 
-            <Link to="#">
+            <Link to="/schedule">
                 <img src={Calendar} alt="Calendar"/>
             </Link>
             </div>

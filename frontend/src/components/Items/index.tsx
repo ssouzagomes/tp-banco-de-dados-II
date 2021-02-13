@@ -15,21 +15,20 @@ export interface Car {
 const Items: React.FC = () => {
     return (
         <Container>
-        <Header>
-            <Title>
-                    <span>Lamborghini</span>
-                    <strong>Huracan</strong>
-                </Title>
+            <Header>
+                <Title>
+                        <span>Lamborghini</span>
+                        <strong>Huracan</strong>
+                    </Title>
 
-                <Price>
-                    <span>AO DIA</span>
-                    <strong>R$ 580</strong>
-                </Price>
-        </Header>
+                    <Price>
+                        <span>AO DIA</span>
+                        <strong>R$ 580</strong>
+                    </Price>
+            </Header>
             
-
-            <img className="car"src={Lambo} />
-            <img className="energy" src={Energia} />
+            <img className="car" alt="Lamborghini" src={Lambo} />
+            <img className="energy" alt="Energy" src={Energia} />
         </Container>
     );
 }

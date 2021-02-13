@@ -27,6 +27,26 @@ export const Container = styled.div`
     
     }
 
+    main .card {
+        display: flex;
+        flex-direction: column;
+    }
+
+    main .card .period {
+        width: 20rem;
+        height: 2rem;
+        font-size: 14px;
+        color: #03B252;
+        background-color: #DAF3E5;
+
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        border-radius: 4px;
+
+        margin-bottom: 32px;
+    }
+
 `;
 
 export const Header = styled.header`
