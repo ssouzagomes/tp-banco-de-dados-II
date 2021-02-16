@@ -12,6 +12,7 @@ import Items from '../../components/Items';
 import Select from '../../components/SimpleSelect';
 
 import Arrow from '../../assets/icons/arrow.svg';
+import { Link } from 'react-router-dom';
 
 
 const Home: React.FC = () => {
@@ -109,9 +110,18 @@ const Home: React.FC = () => {
         </Filter>
                     
         <main>
-            <Items/>
-            <Items/>
-            <Items/>
+            <Link to="/details">
+                <Items/>
+            </Link>
+
+            <Link to="/details">
+                <Items/>
+            </Link>
+
+            <Link to="/details">
+                <Items/>
+            </Link>
+            
         </main>
     </Container>
     );

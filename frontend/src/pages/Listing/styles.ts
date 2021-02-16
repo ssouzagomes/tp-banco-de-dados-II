@@ -23,6 +23,10 @@ export const Container = styled.div`
             display: grid;
             grid-template-columns: repeat(3, 400px);
             width: 100%;
+
+            a {
+                text-decoration: none;
+            }
         }
     
     }

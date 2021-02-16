@@ -26,7 +26,7 @@ const NavBar: React.FC = () => {
             </div>
 
             <div>
-            <Link to="#">
+            <Link to="/profile">
                 <img src={User} alt="User"/>
             </Link>
                 <span>Usuário</span>

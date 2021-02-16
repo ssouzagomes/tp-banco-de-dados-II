@@ -6,6 +6,7 @@ import  Loupe  from '../../assets/icons/loupe.svg';
 
 import NavBar from '../../components/NavBar';
 import Items from '../../components/Items';
+import { Link } from 'react-router-dom';
 
 const Home: React.FC = () => {
 
@@ -32,11 +33,18 @@ const Home: React.FC = () => {
                 </Form>  
 
                 <div className="items">
-                    <Items/>
+                    <Link to="/details">
+                        <Items/>
+                    </Link>
 
-                    <Items/>
+                    <Link to="/details">
+                        <Items/>
+                    </Link>
 
-                    <Items/>
+                    <Link to="/details">
+                        <Items/>
+                    </Link>
+                    
                 </div>
                 
 

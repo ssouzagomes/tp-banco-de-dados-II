@@ -24,6 +24,10 @@ export const Container = styled.div`
             width: 100%;
             padding: 4.8rem;
         }
+
+        a {
+            text-decoration: none;
+        }
     }
 
 `;
