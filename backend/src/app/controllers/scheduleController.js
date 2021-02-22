@@ -3,7 +3,7 @@ const Schedule = require('../models/schedule');
 const Listing = require('../models/listing')
 const authController = require('../controllers/authController');
 
-async function createSchedule(req, res){
+exports.createSchedule = async function(req, res){
     const selectedListing = req.body;
     const currentUser = authController.loggedUser;
     
@@ -22,7 +22,7 @@ async function createSchedule(req, res){
       }
 }
 
-async function showSchedules(req, res){
+exports.showSchedules = async function(req, res){
     const currentUser = authController.loggedUser;
     
     try{

@@ -31,6 +31,10 @@ router.get('/getVehicles', async (req, res) => {
     vehicle.getVehicles(req,res);
 });
 
+router.get('/getUsers', async (req, res) => {
+    auth.showUsers(req,res);
+});
+
 router.post('/getVehicleByModel', async (req, res) => {
     vehicle.getVehicleByModel(req,res);
 });
@@ -50,5 +54,6 @@ router.get('/getListingsOnRequestedRange', async (req,res) => {
 router.post('/createListing', async (req,res) =>{
     listing.createListing(req,res);
 })
+
 
 module.exports = app => app.use('/', router);

@@ -103,6 +103,10 @@ exports.modifyUser= async function(req,res) {
 
 exports.showUsers= async function(req,res){
   
-  return res.send(User.find().where({}));
+  const users = await User.find({});
+
+  return res.send({users});
 
 }
+
+exports.loggedUser = loggedUser;
