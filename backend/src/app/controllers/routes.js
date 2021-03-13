@@ -8,7 +8,7 @@ const router = express.Router();
 
 
 router.get('/', (req, res) => {
-  res.send("Não tem nada aqui.... ainda");
+  res.send("Não tem nada aqui... ainda");
 });
 
 router.post('/register', async (req, res) => {

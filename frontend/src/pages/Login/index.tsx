@@ -8,6 +8,8 @@ import * as Yup from 'yup';
 import Button from '../../components/Button/index'
 import InputForm from '../../components/InputForm';
 
+import api from '../../services/api'
+
 import {
   ContentContainer,
   Content,
@@ -41,16 +43,15 @@ const Login: React.FC = () => {
           abortEarly: false,
         });
 
-        // await signIn({
-        //   email: data.email,
-        //   password: data.password,
-        // });
+        await api.post('authenticate', data)
 
         history.push('/home');
       } catch (error) {
         if (error instanceof Yup.ValidationError) {
           console.log(error)
         }
+
+        alert('Email ou senha inválido(s)!')
       }
     },
     [history],
