@@ -55,6 +55,8 @@ const Register: React.FC = () => {
         if (error instanceof Yup.ValidationError) {
           console.log(error)
         }
+
+        alert('Usuário já existe!')
       }
     },
     [history],
