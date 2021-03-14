@@ -1,6 +1,6 @@
-import { Switch, BrowserRouter } from 'react-router-dom'
+import { Switch, Route, BrowserRouter } from 'react-router-dom'
 
-import Route from '../routes/Route'
+// import Route from './Route'
 
 import Welcome from '../pages/Welcome'
 import Home from '../pages/Home';
@@ -16,13 +16,13 @@ const Routes = () => {
     <BrowserRouter>
       <Switch>
         <Route component={Welcome} path="/" exact />
-        <Route component={Home} path="/home" isPrivate />
+        <Route component={Home} path="/home" />
         <Route component={Login} path="/login" />
         <Route component={Register} path="/register" />
-        <Route component={Listening} path="/listing" isPrivate />
-        <Route component={Schedule} path="/schedule" isPrivate />
-        <Route component={Profile} path="/profile" isPrivate />
-        <Route component={Details} path="/details" isPrivate />
+        <Route component={Listening} path="/listing" />
+        <Route component={Schedule} path="/schedule" />
+        <Route component={Profile} path="/profile" />
+        <Route component={Details} path="/details" />
       </Switch>
     </BrowserRouter>
   )

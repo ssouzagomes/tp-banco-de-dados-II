@@ -1,16 +1,14 @@
 import React, { createContext, useCallback, useState, useContext } from 'react';
-import { useSignMenu } from './toggle';
 import api from '../services/api';
 
-interface User {
-  id: string;
+interface LoggedUser {
+  _id: string;
   name: string;
   email: string;
 }
 
 interface AuthState {
-  token: string;
-  user: User;
+  loggedUser: LoggedUser;
 }
 
 interface SignInCredentials {
@@ -19,7 +17,7 @@ interface SignInCredentials {
 }
 
 interface AuthContextData {
-  user: User;
+  user: LoggedUser;
   signIn(credentials: SignInCredentials): Promise<void>;
   signOut(): void;
 }
@@ -27,42 +25,36 @@ interface AuthContextData {
 const AuthContext = createContext<AuthContextData>({} as AuthContextData);
 
 const AuthProvider: React.FC = ({ children }) => {
-  const { handleChangeActivatedMenu } = useSignMenu();
 
-  const [data, setData] = useState<AuthState>(() => {
-    const token = localStorage.getItem('@APAE:token');
-    const user = localStorage.getItem('@APAE:user');
+  const [data, setData] = useState(() => {
+    const loggedUser = localStorage.getItem('@RENTX:loggedUser');
 
-    if (token && user) {
-      return { token, user: JSON.parse(user) };
+    if (loggedUser) {
+      return { loggedUser: JSON.parse(loggedUser) };
     }
 
     return {} as AuthState;
   });
 
   const signIn = useCallback(async ({ email, password }) => {
-    const response = await api.post('sessions', {
-      email,
-      password,
-    });
+    const data = { email, password } 
 
-    const { token, user } = response.data;
+    const response = await api.post('/authenticate', data);
+    
+    const { loggedUser } = response.data;
 
-    localStorage.setItem('@APAE:token', token);
-    localStorage.setItem('@APAE:user', JSON.stringify(user));
+    localStorage.setItem('@RENTX:loggedUser', JSON.stringify(loggedUser));
 
-    setData({ token, user });
+    setData({ loggedUser });
   }, []);
 
   const signOut = useCallback(() => {
-    localStorage.removeItem('@APAE:token');
-    localStorage.removeItem('@APAE:user');
-    handleChangeActivatedMenu('start');
+    localStorage.removeItem('@RENTX:loggedUser');
     setData({} as AuthState);
-  }, [handleChangeActivatedMenu]);
+  }, []);
 
   return (
-    <AuthContext.Provider value={{ user: data.user, signIn, signOut }}>
+    <AuthContext.Provider value={{ user: data.loggedUser, signIn, signOut }}>
       {children}
     </AuthContext.Provider>
   );
@@ -74,6 +66,8 @@ function useAuth(): AuthContextData {
   if (!context) {
     throw new Error('useAuth must be used within an AuthProvider.');
   }
+
+  console.log(context.user)
 
   return context;
 }

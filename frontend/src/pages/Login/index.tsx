@@ -8,6 +8,7 @@ import * as Yup from 'yup';
 import Button from '../../components/Button/index'
 import InputForm from '../../components/InputForm';
 
+// import { useAuth } from '../../hooks/auth';
 import api from '../../services/api'
 
 import {
@@ -28,6 +29,17 @@ const Login: React.FC = () => {
 
   const formRef = useRef<FormHandles>(null);
   const history = useHistory();
+  // const { signIn } = useAuth();
+
+  const signIn = useCallback(async ({ email, password }) => {
+    const data = { email, password }
+
+    const response = await api.post('/authenticate', data);
+    
+    const { loggedUser } = response.data;
+
+    localStorage.setItem('@RENTX:loggedUser', JSON.stringify(loggedUser))
+  },[])
 
   const handleSubmit = useCallback(
     async (data: LoginFormData) => {
@@ -43,7 +55,7 @@ const Login: React.FC = () => {
           abortEarly: false,
         });
 
-        await api.post('authenticate', data)
+        await signIn(data);
 
         history.push('/home');
       } catch (error) {
@@ -54,7 +66,7 @@ const Login: React.FC = () => {
         alert('Email ou senha inválido(s)!')
       }
     },
-    [history],
+    [history, signIn],
   );
 
   return (
@@ -99,11 +111,11 @@ const Login: React.FC = () => {
                 placeholder="Senha"
               />
 
-              <ForgotPasswordContainer>
+              {/* <ForgotPasswordContainer>
                 <Link to='#'>
                   Esqueci minha senha
                 </Link>
-              </ForgotPasswordContainer>
+              </ForgotPasswordContainer> */}
               
               <ButtonContainer>
                 <Button type="submit">Entrar</Button>

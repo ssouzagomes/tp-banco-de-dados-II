@@ -2,7 +2,7 @@ const User = require('../models/user');
 const bcrypt = require('bcryptjs')
 const loggedUser = undefined;
 
-exports.register= async function(req,res) {
+exports.register = async function(req,res) {
   const { email } = req.body;
 
   try {
@@ -22,7 +22,7 @@ exports.register= async function(req,res) {
   }
 };
 
-exports.authenticate= async function(req,res) {
+exports.authenticate = async function(req,res) {
   const { email, password } = req.body;
 
   const loggedUser = await User.findOne({ email }).select('+password');
@@ -41,7 +41,7 @@ exports.authenticate= async function(req,res) {
   });
 };
 
-exports.forgot_password= async function(req,res) {
+exports.forgot_password = async function(req,res) {
   const { email } = req.body;
 
   try {
@@ -64,7 +64,7 @@ exports.forgot_password= async function(req,res) {
   }
 };
 
-exports.reset_password= async function(req,res) {
+exports.reset_password = async function(req,res) {
   const { email, token, password } = req.body;
 
   try {
@@ -92,7 +92,7 @@ exports.reset_password= async function(req,res) {
   }
 };
 
-exports.modifyUser= async function(req,res) {
+exports.modifyUser = async function(req,res) {
   try {
     User.findByIdAndUpdate(loggedUser.id, req.body);
   } catch (err) {
@@ -101,7 +101,7 @@ exports.modifyUser= async function(req,res) {
 
 };
 
-exports.showUsers= async function(req,res){
+exports.showUsers = async function(req,res){
   
   const users = await User.find({});
 

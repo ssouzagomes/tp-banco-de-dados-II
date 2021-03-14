@@ -18,13 +18,28 @@ export const Container = styled.header`
         margin-right: 3.2rem;
     }
 
+    img#profile {
+        margin-right: 2rem
+    }
+
     div {
         display: flex;
         align-items: center;
         span {
-            margin-right: 2.4rem;
+            margin-right: 2rem;
             color: #FFF;
             font-weight: 700;
         }
+    }
+
+    button {
+        border: none;
+        background: none;
+
+        margin-right: 2rem;
+        font-size: 18px;
+        color: white;
+
+        cursor: pointer;
     }
 `;
