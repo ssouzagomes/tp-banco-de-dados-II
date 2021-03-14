@@ -28,13 +28,13 @@ const Welcome: React.FC = () => {
           </h3>
 
           <ButtonsContainer>
-            <Link to="entrar">
+            <Link to="login">
               <button id="login" name="login">
                 Entrar
               </button>
             </Link>
 
-            <Link to="cadastrar">
+            <Link to="register">
               <button id="register" name="register">
                 Cadastrar
               </button>
