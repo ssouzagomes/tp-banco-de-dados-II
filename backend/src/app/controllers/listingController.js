@@ -21,7 +21,7 @@ exports.createListing = async function(req,res){
 };
 
 exports.getListings = async function(req,res){
-    const listings = await Listing.find({});
+    const listings = await Listing.find({}).populate('vehicle');
 
     return res.send({listings});
 }
