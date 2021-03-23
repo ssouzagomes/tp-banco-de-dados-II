@@ -50,13 +50,11 @@ const Register: React.FC = () => {
         })
 
         alert('Usuário cadastrado com sucesso!')
-        history.push('/home');
+        history.push('/');
       } catch (error) {
         if (error instanceof Yup.ValidationError) {
           console.log(error)
         }
-
-        alert('Usuário já existe!')
       }
     },
     [history],

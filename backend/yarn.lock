@@ -867,7 +867,7 @@
   "resolved" "https://registry.npmjs.org/mongoose-legacy-pluralize/-/mongoose-legacy-pluralize-1.0.2.tgz"
   "version" "1.0.2"
 
-"mongoose@*", "mongoose@^5.11.15":
+"mongoose@^5.11.15":
   "integrity" "sha512-8T4bT6eCGB7MqCm40oVhnhT/1AyAdwe+y1rYUhdl3ljsks3BpYz8whZgcMkIoh6VoCCjipOXRqZqdk1UByvlYA=="
   "resolved" "https://registry.npmjs.org/mongoose/-/mongoose-5.11.15.tgz"
   "version" "5.11.15"
