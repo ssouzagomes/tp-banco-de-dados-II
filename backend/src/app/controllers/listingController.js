@@ -27,12 +27,12 @@ exports.getListings = async function(req,res){
 }
 
 exports.getListingsOnRequestedRange = async function(req, res){
-  const { scheduleStartDate } = req.body;
-  const { scheduleEndDate } = req.body;
+  const { startDate } = req.body;
+  const { endDate } = req.body;
 
   try {
-      const listings = await Listing.find().where('startDate').gte(scheduleStartDate).
-      where('endDate').lte(scheduleEndDate);
+      const listings = await Listing.find().where('startDate').gte(startDate).
+      where('endDate').lte(endDate);
       return res.send({listings});        
   } catch (err) {
       return res.status(400).send({ error: '' + err });
@@ -41,20 +41,20 @@ exports.getListingsOnRequestedRange = async function(req, res){
 }
 
 exports.getListingsOnRequestedRange = async function(req, res){
-  const { scheduleStartDate } = req.body;
-  const { scheduleEndDate } = req.body;
+  const { startDate } = req.body;
+  const { endDate } = req.body;
   const { fuel } = req.body;
   const { transmission } = req.body;
   const { priceStart } = req.body
   const { priceEnd } = req.body
-  if(!scheduleEndDate && scheduleEndDate){
+  if(!endDate && endDate){
     return res.status(400).send({ error: 'Data de inico e fim nao especificada'});
   }
 
   if(priceStart && priceEnd && transmission && fuel){ //Se todos os campos tem valor
     try {  
-      const listings = await Listing.find().where('startDate').gte(scheduleStartDate).
-      where('endDate').lte(scheduleEndDate).where('price').gte(priceStart).lte(priceEnd).populate('vehicle').lean();
+      const listings = await Listing.find().where('startDate').gte(startDate).
+      where('endDate').lte(endDate).where('price').gte(priceStart).lte(priceEnd).populate('vehicle').lean();
 
       return res.send(listings.filter(
         function(x){
@@ -66,8 +66,8 @@ exports.getListingsOnRequestedRange = async function(req, res){
     }
   }else if(priceStart && priceEnd && transmission){
     try {
-      const listings = await Listing.find().where('startDate').gte(scheduleStartDate).
-      where('endDate').lte(scheduleEndDate).where('price').gte(priceStart).lte(priceEnd).populate('vehicle').lean();
+      const listings = await Listing.find().where('startDate').gte(startDate).
+      where('endDate').lte(endDate).where('price').gte(priceStart).lte(priceEnd).populate('vehicle').lean();
 
       return res.send(listings.filter(
         function(x){
@@ -79,8 +79,8 @@ exports.getListingsOnRequestedRange = async function(req, res){
     }
   }else if(priceStart && priceEnd && fuel){
     try {
-      const listings = await Listing.find().where('startDate').gte(scheduleStartDate).
-      where('endDate').lte(scheduleEndDate).where('price').gte(priceStart).lte(priceEnd).populate('vehicle').lean();
+      const listings = await Listing.find().where('startDate').gte(startDate).
+      where('endDate').lte(endDate).where('price').gte(priceStart).lte(priceEnd).populate('vehicle').lean();
 
       return res.send(listings.filter(
         function(x){
@@ -92,8 +92,8 @@ exports.getListingsOnRequestedRange = async function(req, res){
     }
   }else if(transmission && fuel){
     try {
-      const listings = await Listing.find().where('startDate').gte(scheduleStartDate).
-      where('endDate').lte(scheduleEndDate).populate('vehicle').lean();
+      const listings = await Listing.find().where('startDate').gte(startDate).
+      where('endDate').lte(endDate).populate('vehicle').lean();
 
       return res.send(listings.filter(
         function(x){
@@ -105,8 +105,8 @@ exports.getListingsOnRequestedRange = async function(req, res){
     }
   }else if(fuel){
     try {
-      const listings = await Listing.find().where('startDate').gte(scheduleStartDate).
-      where('endDate').lte(scheduleEndDate).populate('vehicle').lean();
+      const listings = await Listing.find().where('startDate').gte(startDate).
+      where('endDate').lte(endDate).populate('vehicle').lean();
 
       return res.send(listings.filter(
         function(x){
@@ -118,8 +118,8 @@ exports.getListingsOnRequestedRange = async function(req, res){
     }
   }else if(transmission){
     try {
-      const listings = await Listing.find().where('startDate').gte(scheduleStartDate).
-      where('endDate').lte(scheduleEndDate).populate('vehicle').lean();
+      const listings = await Listing.find().where('startDate').gte(startDate).
+      where('endDate').lte(endDate).populate('vehicle').lean();
       
       return res.send(listings.filter(
         function(x){
@@ -131,8 +131,8 @@ exports.getListingsOnRequestedRange = async function(req, res){
     }
   }else if(priceStart && priceEnd){
     try {
-      const listings = await Listing.find().where('startDate').gte(scheduleStartDate).
-      where('endDate').lte(scheduleEndDate).where('price').gte(priceStart).lte(priceEnd).populate('vehicle').lean();
+      const listings = await Listing.find().where('startDate').gte(startDate).
+      where('endDate').lte(endDate).where('price').gte(priceStart).lte(priceEnd).populate('vehicle').lean();
 
       return res.send(listings);      
     } catch (err) {
@@ -140,8 +140,8 @@ exports.getListingsOnRequestedRange = async function(req, res){
     }
   }else{
     try {
-      const listings = await Listing.find().where('startDate').gte(scheduleStartDate).
-      where('endDate').lte(scheduleEndDate).populate('vehicle');
+      const listings = await Listing.find().where('startDate').gte(startDate).
+      where('endDate').lte(endDate).populate('vehicle');
       return res.send({listings});        
     } catch (err) {
       return res.status(400).send({ error: '' + err });
