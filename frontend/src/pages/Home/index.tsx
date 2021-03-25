@@ -1,19 +1,38 @@
-import React, { useState, useRef } from 'react';
+import React, { useState, useRef, useEffect } from 'react';
 import { FormHandles } from '@unform/core';
 import DayPickerInput from 'react-day-picker/DayPickerInput';
 import 'react-day-picker/lib/style.css';
-
-import { Container, Title, Filter, FormSearch, Header } from './styles';
-
-
-import NavBar from '../../components/NavBar';
-import Items from '../../components/Items';
-
-import Select from '../../components/SimpleSelect';
-
-import Arrow from '../../assets/icons/arrow.svg';
 import { Link } from 'react-router-dom';
 
+import {
+    Container,
+    Title,
+    Filter,
+    FormSearch,
+    Header,
+    Item,
+    HeaderCar,
+    TitleCar,
+    Price
+} from './styles';
+
+import NavBar from '../../components/NavBar';
+import Select from '../../components/SimpleSelect';
+
+import Lambo from '../../assets/Lambo.png';
+import Energia from '../../assets/icons/Energia.svg';
+
+import api from '../../services/api'
+
+interface Listing {
+    price: Number;
+    vehicle: {
+        manufacturer: String,
+        model: String
+    };
+    startDate: Date;
+    endDate: Date;
+}
 
 const Home: React.FC = () => {
 
@@ -38,8 +57,18 @@ const Home: React.FC = () => {
         { value: 'Manual', label: 'Manual' },
     ]);
 
-   
+    const [listings, setListings] = useState<Listing[]>([])
 
+    useEffect(() => {
+        async function loadListing() {
+            await api.get('getListings').then(response => {
+                setListings(response.data)
+            })
+        }
+        loadListing()
+    })
+    
+    console.log(listings[0]?.vehicle.manufacturer)
 
     return (
         <Container>
@@ -73,7 +102,7 @@ const Home: React.FC = () => {
 
         <Title>
             <h1>Resultados</h1>
-            <span>4 Carros</span>
+            <span>{listings.length} Carros</span>
         </Title>
         <Filter>
             <h2>
@@ -108,21 +137,29 @@ const Home: React.FC = () => {
 
             </FormSearch>
         </Filter>
-                    
+
         <main>
-            <Link to="/details">
-                <Items/>
-            </Link>
+            {listings.map(listing => (
+                <Link to="/details">
+                    <Item>
+                        <HeaderCar>
+                            <TitleCar>
+                                <span>{listing.vehicle.manufacturer}</span>
+                                <strong>{listing.vehicle.model}</strong>
+                            </TitleCar>
 
-            <Link to="/details">
-                <Items/>
-            </Link>
+                            <Price>
+                                <span>AO DIA</span>
+                                <strong>{listing.price}</strong>
+                            </Price>
+                        </HeaderCar>
 
-            <Link to="/details">
-                <Items/>
-            </Link>
-            
-        </main>
+                        <img className="car" alt="Lamborghini" src={Lambo} />
+                        <img className="energy" alt="Energy" src={Energia} />
+                    </Item>
+                </Link>
+            ))}
+        </main>s
     </Container>
     );
 }
