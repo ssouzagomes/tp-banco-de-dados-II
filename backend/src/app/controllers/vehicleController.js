@@ -19,15 +19,11 @@ exports.createVehicle= async function(req,res) {
     }
 };
 
-exports.getVehicles = function(req,res){
-    Vehicle.find({}, function(err, vehicles) {
-        var vehicleMap = {};
-    
-        vehicles.forEach(function(vehicle) {
-          vehicleMap[vehicle._id] = vehicle;
-        });
-        res.send(vehicleMap);  
-      });
+exports.getVehicles = async function(req,res){
+  const vehicles = await Vehicle.find({});
+
+  return res.send(vehicles);
+
 };
 
 exports.getVehicleByModel = async function(req, res){
@@ -35,6 +31,6 @@ exports.getVehicleByModel = async function(req, res){
 
     const vehicle = await Vehicle.find().where('model').equals(model);
 
-    return res.send({vehicle});
+    return res.send(vehicle);
 }
 

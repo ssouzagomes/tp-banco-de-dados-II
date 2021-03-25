@@ -105,7 +105,7 @@ exports.showUsers = async function(req,res){
   
   const users = await User.find({});
 
-  return res.send({users});
+  return res.send(users);
 
 }
 

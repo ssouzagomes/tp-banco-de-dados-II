@@ -23,7 +23,7 @@ exports.createListing = async function(req,res){
 exports.getListings = async function(req,res){
     const listings = await Listing.find({}).populate('vehicle');
 
-    return res.send({listings});
+    return res.send(listings);
 }
 
 exports.getListingsOnRequestedRange = async function(req, res){
