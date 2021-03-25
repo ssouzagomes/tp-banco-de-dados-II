@@ -1,4 +1,4 @@
-import React, { useState, useRef, useEffect } from 'react';
+import React, { useState, useRef, useEffect, useCallback } from 'react';
 import { FormHandles } from '@unform/core';
 import DayPickerInput from 'react-day-picker/DayPickerInput';
 import 'react-day-picker/lib/style.css';
@@ -28,34 +28,23 @@ interface Listing {
     price: Number;
     vehicle: {
         manufacturer: String,
-        model: String
+        model: String,
     };
     startDate: Date;
     endDate: Date;
 }
 
+interface ListingFormData {
+    startDate?: Date;
+    endDate?: Date;
+    priceStart?: Number;
+    priceEnd?: Number;
+    fuel?: String,
+    transmition?: String,
+}
+
 const Home: React.FC = () => {
-
     const formRef = useRef<FormHandles>(null);
-
-    const [pricePerDay, setPricePerDay] = useState([
-        { value: 'R$ 50 - R$ 100', label: 'R$ 50 - R$ 100' },
-        { value: 'R$ 100 - R$ 150', label: 'R$ 100 - R$ 150' },
-        { value: 'R$ 150 - R$ 200', label: 'R$ 150 - R$ 200' },
-        { value: 'R$ 200 - R$ 250', label: 'R$ 200 - R$ 250' },
-        { value: 'Acima de R$ 250', label: 'Acima de R$ 250' },
-    ]);
-
-    const [fuel, setFuel] = useState([
-        { value: 'Gasolina', label: 'Gasolina' },
-        { value: 'Elétrico', label: 'Elétrico' },
-        { value: 'Álcool', label: 'Álcool' },
-    ]);
-
-    const [transmissionFilter, setTransmissionFilter] = useState([
-        { value: 'Automático', label: 'Automático' },
-        { value: 'Manual', label: 'Manual' },
-    ]);
 
     const [listings, setListings] = useState<Listing[]>([])
 
@@ -67,8 +56,21 @@ const Home: React.FC = () => {
         }
         loadListing()
     })
+
+    const handleSubmit = useCallback(
+        async (data: ListingFormData) => {
+          try {
+            formRef.current?.setErrors({});
+
+            await api.get('/getListingsOnRequestedRange', data.)
+
+          } catch (error) {
+            console.log(error)
     
-    console.log(listings[0]?.vehicle.manufacturer)
+          }
+        },
+        [],
+      );
 
     return (
         <Container>
@@ -93,7 +95,6 @@ const Home: React.FC = () => {
                         dayPickerProps={{
                             month: new Date(Date.now()),
                             showWeekNumbers: true,
-                            
                         }}
                     />
                 </div>
@@ -109,26 +110,39 @@ const Home: React.FC = () => {
                 Filtros:
             </h2>
             <span>Limpar todos</span>
-            <FormSearch ref={formRef} onSubmit={() => {}}>
+            <FormSearch ref={formRef} onSubmit={handleSubmit}>
                 <Select
-                    name="pricePerDay"
+                    name="price"
                     label="Preço ao dia"
                     placeholder="Selecione"
-                    options={pricePerDay}
+                    options={[
+                        { value: 'R$ 50 - R$ 100', label: 'R$ 50 - R$ 100' },
+                        { value: 'R$ 100 - R$ 150', label: 'R$ 100 - R$ 150' },
+                        { value: 'R$ 150 - R$ 200', label: 'R$ 150 - R$ 200' },
+                        { value: 'R$ 200 - R$ 250', label: 'R$ 200 - R$ 250' },
+                        { value: 'Acima de R$ 250', label: 'Acima de R$ 250' },
+                    ]}
                 />
 
                 <Select
                     name="fuel"
                     label="Combustível"
                     placeholder="Selecione"
-                    options={fuel}
+                    options={[
+                        { value: 'Gasolina', label: 'Gasolina' },
+                        { value: 'Elétrico', label: 'Elétrico' },
+                        { value: 'Álcool', label: 'Álcool' },
+                    ]}
                 />
 
                 <Select
-                    name="transmissionfilter"
+                    name="transmission"
                     label="Transmissão"
                     placeholder="Selecione"
-                    options={transmissionFilter}
+                    options={[
+                        { value: 'Automático', label: 'Automático' },
+                        { value: 'Manual', label: 'Manual' },
+                    ]}
                 />
 
                 <button type="submit">

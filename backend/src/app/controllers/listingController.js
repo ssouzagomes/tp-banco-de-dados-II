@@ -47,11 +47,12 @@ exports.getListingsOnRequestedRange = async function(req, res){
   const { transmission } = req.body;
   const { priceStart } = req.body
   const { priceEnd } = req.body
+
   if(!scheduleEndDate && scheduleEndDate){
     return res.status(400).send({ error: 'Data de inico e fim nao especificada'});
   }
 
-  if(priceStart && priceEnd && transmission && fuel){ //Se todos os campos tem valor
+  if(priceStart && priceEnd && transmission && fuel){ // Se todos os campos tem valor
     try {  
       const listings = await Listing.find().where('startDate').gte(scheduleStartDate).
       where('endDate').lte(scheduleEndDate).where('price').gte(priceStart).lte(priceEnd).populate('vehicle').lean();
@@ -60,7 +61,7 @@ exports.getListingsOnRequestedRange = async function(req, res){
         function(x){
           return x.vehicle.transmission == transmission && x.vehicle.fuel == fuel
         })
-        );        
+      );        
     } catch (err) {
       return res.status(400).send({ error: '' + err });
     }
@@ -73,7 +74,7 @@ exports.getListingsOnRequestedRange = async function(req, res){
         function(x){
           return x.vehicle.transmission == transmission
         })
-        );        
+      );        
     } catch (err) {
       return res.status(400).send({ error: '' + err });
     }
