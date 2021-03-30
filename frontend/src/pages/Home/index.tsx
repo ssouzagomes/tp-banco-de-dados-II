@@ -1,7 +1,6 @@
 import React, { useState, useRef, useEffect, useCallback } from 'react';
+import DatePicker from "react-datepicker";
 import { FormHandles } from '@unform/core';
-import DayPickerInput from 'react-day-picker/DayPickerInput';
-import 'react-day-picker/lib/style.css';
 import { Link } from 'react-router-dom';
 
 import {
@@ -16,6 +15,8 @@ import {
     Price
 } from './styles';
 
+import "react-datepicker/dist/react-datepicker.css";
+
 import NavBar from '../../components/NavBar';
 import Select from '../../components/SimpleSelect';
 
@@ -25,28 +26,23 @@ import Energia from '../../assets/icons/Energia.svg';
 import api from '../../services/api'
 
 interface Listing {
-    price: Number;
-    vehicle: {
-        manufacturer: String,
-        model: String,
+    price?: Number;
+    vehicle?: {
+        manufacturer?: String,
+        model?: String,
+        fuel?: String,
+        transmition?: String,
     };
-    startDate: Date;
-    endDate: Date;
-}
-
-interface ListingFormData {
     startDate?: Date;
     endDate?: Date;
-    priceStart?: Number;
-    priceEnd?: Number;
-    fuel?: String,
-    transmition?: String,
 }
 
 const Home: React.FC = () => {
     const formRef = useRef<FormHandles>(null);
 
     const [listings, setListings] = useState<Listing[]>([])
+    const [startDate, setStartDate] = useState(new Date())
+    const [endDate, setEndDate] = useState(new Date())
 
     useEffect(() => {
         async function loadListing() {
@@ -57,20 +53,39 @@ const Home: React.FC = () => {
         loadListing()
     })
 
-    const handleSubmit = useCallback(
-        async (data: ListingFormData) => {
-          try {
-            formRef.current?.setErrors({});
-
-            await api.get('/getListingsOnRequestedRange', data.)
-
-          } catch (error) {
-            console.log(error)
+    // useEffect(() => {
+    //     async function loadListingOnRange() {
+    //       await api.get<Listing[]>('getListingsOnRequestedRange', {
+    //         params: {
+    //           startDate: startDate,
+    //           endDate: endDate,
+    //         },
+    //       }).then(response => {
+    //         setListings(response.data)
+    //       });
+    //     }
     
-          }
-        },
-        [],
-      );
+    //     loadListingOnRange();
+    // }, [startDate, endDate]);
+
+    console.log(listings)
+
+    // const handleSubmit = useCallback(
+    //     async (data: Listing) => {
+    //       try {
+    //         formRef.current?.setErrors({});
+
+    //         await api.get('/getListingsOnRequestedRange', {
+    //             params: {
+    //                 data
+    //             },
+    //         })
+    //       } catch (error) {
+    //         console.log(error)
+    //       }
+    //     },
+    //     [],
+    // );
 
     return (
         <Container>
@@ -81,21 +96,17 @@ const Home: React.FC = () => {
             <div className="date">
                 <div className="de">
                     <p>DE</p>
-                    <DayPickerInput
-                        dayPickerProps={{
-                            month: new Date(Date.now()),
-                            showWeekNumbers: true, 
-                        }}
+                    <DatePicker
+                        selected={startDate}
+                        onChange={value => setStartDate(startDate)}
                     />
                 </div>
 
                 <div className="ate">
                     <p>ATÉ</p>
-                    <DayPickerInput
-                        dayPickerProps={{
-                            month: new Date(Date.now()),
-                            showWeekNumbers: true,
-                        }}
+                    <DatePicker
+                        selected={endDate}
+                        onChange={value => setEndDate(endDate)}
                     />
                 </div>
             </div>
@@ -110,7 +121,7 @@ const Home: React.FC = () => {
                 Filtros:
             </h2>
             <span>Limpar todos</span>
-            <FormSearch ref={formRef} onSubmit={handleSubmit}>
+            <FormSearch ref={formRef} onSubmit={() => {}}>
                 <Select
                     name="price"
                     label="Preço ao dia"
@@ -158,8 +169,8 @@ const Home: React.FC = () => {
                     <Item>
                         <HeaderCar>
                             <TitleCar>
-                                <span>{listing.vehicle.manufacturer}</span>
-                                <strong>{listing.vehicle.model}</strong>
+                                <span>{listing.vehicle?.manufacturer}</span>
+                                <strong>{listing.vehicle?.model}</strong>
                             </TitleCar>
 
                             <Price>
