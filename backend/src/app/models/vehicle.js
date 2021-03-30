@@ -33,6 +33,10 @@ const VehicleSchema = new mongoose.Schema({
     type: Number,
     require: false,
   },
+  imageUrl: {
+    type: String,
+    require: false,
+  }
 });
 
 const Vehicle = mongoose.model('Vehicle', VehicleSchema);
