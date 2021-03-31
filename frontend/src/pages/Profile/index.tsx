@@ -5,8 +5,6 @@ import { Link } from 'react-router-dom';
 import { FiArrowLeft, FiUser, FiMail, FiLock } from 'react-icons/fi';
 import * as Yup from 'yup';
 
-import * as Yup from 'yup';
-
 import InputForm from '../../components/InputForm';
 import Button from '../../components/Button';
 
