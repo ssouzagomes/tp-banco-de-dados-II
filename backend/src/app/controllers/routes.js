@@ -47,6 +47,10 @@ router.post('/getListingsOnRequestedRange', async (req,res) => {
     listing.getListingsOnRequestedRange(req,res);
 })
 
+router.get('/getListing/:id',function(req,res){
+    listing.getListing(req,res);
+});
+
 router.post('/createListing', async (req,res) =>{
     listing.createListing(req,res);
 })

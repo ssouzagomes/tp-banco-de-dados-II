@@ -26,6 +26,21 @@ exports.getListings = async function(req,res){
     return res.send(listings);
 }
 
+exports.getListing = async function(req,res){
+  const id = req.params.id;
+  console.log(id); // should display 123
+
+  try {
+    const listing = await Listing.findById(id).populate('vehicle');
+    return res.send(listing);
+
+  } catch (err) {
+    return res.status(400).send({ error: 'Id not found ' + err });
+  }
+
+}
+
+
 exports.getListingsOnRequestedRange = async function(req, res){
   const { startDate } = req.body;
   const { endDate } = req.body;
