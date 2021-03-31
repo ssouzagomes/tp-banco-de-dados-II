@@ -1,6 +1,5 @@
 const User = require('../models/user');
 const bcrypt = require('bcryptjs')
-const loggedUser = undefined;
 
 exports.register = async function(req,res) {
   const { email } = req.body;
@@ -35,14 +34,11 @@ exports.authenticate = async function(req,res) {
 
   loggedUser.password = undefined;
 
-  res.send({
-    loggedUser,
-    token: { id: loggedUser.id },
-  });
+  res.send(loggedUser);
 };
 
-exports.forgot_password = async function(req,res) {
-  const { email } = req.body;
+exports.reset_password = async function(req,res) {
+  const { email, password, newPassword } = req.body;
 
   try {
     const user = await User.findOne({ email });
@@ -50,39 +46,9 @@ exports.forgot_password = async function(req,res) {
     if (!user)
       return res.status(400).send({ error: 'User not found' });
 
-    const now = new Date();
-    now.setHours(now.getHours() + 1);
-
-    await User.findByIdAndUpdate(user.id, {
-      '$set': {
-        passwordResetToken: token,
-        passwordResetExpires: now,
-      }
-    });
-  } catch (err) {
-    res.status(400).send({ error: 'Error on forgot password, try again' });
-  }
-};
-
-exports.reset_password = async function(req,res) {
-  const { email, token, password } = req.body;
-
-  try {
-    const user = await User.findOne({ email })
-      .select('+passwordResetToken passwordResetExpires');
-
-    if (!user)
-      return res.status(400).send({ error: 'User not found' });
-
-    if (token !== user.passwordResetToken)
-      return res.status(400).send({ error: 'Token invalid' });
-
-    const now = new Date();
-
-    if (now > user.passwordResetExpires)
-      return res.status(400).send({ error: 'Token expired, generate a new one' });
-
-    user.password = password;
+    if(await bcrypt.compare(password, user.password)){
+      user.password = newPassword;  
+    }
 
     await user.save();
 
@@ -108,5 +74,3 @@ exports.showUsers = async function(req,res){
   return res.send(users);
 
 }
-
-exports.loggedUser = loggedUser;
