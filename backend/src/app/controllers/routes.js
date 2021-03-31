@@ -19,10 +19,6 @@ router.post('/authenticate', async (req, res) => {
     auth.authenticate(req,res);
 });
 
-router.post('/forgot_password', async (req, res) => {
-    auth.forgot_password(req,res);
-});
-
 router.put('/reset_password', async (req, res) => {
     auth.reset_password(req,res);
 });
