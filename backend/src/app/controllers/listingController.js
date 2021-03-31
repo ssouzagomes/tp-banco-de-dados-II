@@ -33,6 +33,9 @@ exports.getListingsOnRequestedRange = async function(req, res){
   const { transmission } = req.body;
   const { priceStart } = req.body
   const { priceEnd } = req.body
+
+  console.log(startDate, endDate)
+
   if(!endDate && endDate){
     return res.status(400).send({ error: 'Data de inico e fim nao especificada'});
   }

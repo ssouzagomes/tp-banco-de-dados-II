@@ -1,8 +1,6 @@
 import styled from 'styled-components';
 import { Form as Unform } from '@unform/web';
 
-import { LabelContainer } from '../../components/SimpleSelect/styles';
-
 export const Container = styled.div`
     width: 100vw;
     height: 100vh;
@@ -31,6 +29,10 @@ export const Container = styled.div`
     }
 
 `;
+
+export const Form = styled(Unform)`
+
+`
 
 export const Header = styled.header`
     max-width: 100%;
@@ -112,7 +114,7 @@ export const Filter = styled.div`
     }
 `;
 
-export const FormSearch = styled(Unform)`
+export const Search = styled.div`
     margin-top: 2.1rem;
     align-items: center;
 

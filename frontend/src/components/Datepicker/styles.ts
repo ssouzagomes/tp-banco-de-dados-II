@@ -26,7 +26,7 @@ export const Container = styled.div<ContainerProps>`
     border-bottom: 2px solid #818e9b;
     color: #292929;
     width: 100%;
-    margin-top: 20px; // Resolve questão do espaçamento
+    margin-top: 8px; // Resolve questão do espaçamento
 
     input {
       color: #292929;
@@ -45,7 +45,7 @@ export const Container = styled.div<ContainerProps>`
       ${props =>
         props.isFocused &&
         css`
-          border-bottom: 2px solid #109cf1;
+          border-bottom: 2px solid #DC1637;
         `}
 
       ${props =>
@@ -62,7 +62,7 @@ export const Label = styled.label<LabelProps>`
   ${props =>
     props.isFocused &&
     css`
-      color: #109cf1;
+      color: #DC1637;
     `}
   ${props =>
     props.isFilled &&
