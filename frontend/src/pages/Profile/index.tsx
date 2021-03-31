@@ -5,6 +5,8 @@ import { Link } from 'react-router-dom';
 import { FiArrowLeft, FiUser, FiMail, FiLock } from 'react-icons/fi';
 import * as Yup from 'yup';
 
+import * as Yup from 'yup';
+
 import InputForm from '../../components/InputForm';
 import Button from '../../components/Button';
 
@@ -94,7 +96,7 @@ const Profile: React.FC = () => {
                 <Form ref={formRef} onSubmit={handleSubmit}>
                     <FormContainer>
                         <InputForm
-                            name="nome"
+                            name="name"
                             icon={FiUser}
                             required={true}
                             labelName="Nome"

@@ -1,6 +1,5 @@
 const User = require('../models/user');
 const bcrypt = require('bcryptjs')
-const loggedUser = undefined;
 
 exports.register = async function(req,res) {
   const { email } = req.body;
@@ -35,41 +34,14 @@ exports.authenticate = async function(req,res) {
 
   loggedUser.password = undefined;
 
-  res.send({
-    loggedUser,
-    token: { id: loggedUser.id },
-  });
-};
-
-exports.forgot_password = async function(req,res) {
-  const { email } = req.body;
-
-  try {
-    const user = await User.findOne({ email });
-
-    if (!user)
-      return res.status(400).send({ error: 'User not found' });
-
-    const now = new Date();
-    now.setHours(now.getHours() + 1);
-
-    await User.findByIdAndUpdate(user.id, {
-      '$set': {
-        passwordResetToken: token,
-        passwordResetExpires: now,
-      }
-    });
-  } catch (err) {
-    res.status(400).send({ error: 'Error on forgot password, try again' });
-  }
+  res.send(loggedUser);
 };
 
 exports.reset_password = async function(req,res) {
   const { email, id, password } = req.body;
 
   try {
-    const user = await User.findOne({ email })
-      .select('+passwordResetToken passwordResetExpires');
+    const user = await User.findOne({ email });
 
     if (!user)
       return res.status(400).send({ error: 'User not found' });
@@ -108,5 +80,3 @@ exports.showUsers = async function(req,res){
   return res.send(users);
 
 }
-
-exports.loggedUser = loggedUser;
