@@ -20,7 +20,6 @@ import NavBar from '../../components/NavBar';
 import Datepicker from '../../components/Datepicker'
 import Select from '../../components/SimpleSelect';
 
-import Lambo from '../../assets/Lambo.png';
 import Energia from '../../assets/icons/Energia.svg';
 
 import api from '../../services/api'
@@ -30,6 +29,7 @@ interface Listing {
     vehicle: {
         manufacturer: string,
         model: string,
+        imgUrl: string,
     };
     startDate: Date;
     endDate: Date;
@@ -121,8 +121,6 @@ const Home: React.FC = () => {
         [priceStart, priceEnd],
     );
 
-    console.log(listings)
-
     return (
         <Container>
         <NavBar/>
@@ -207,8 +205,6 @@ const Home: React.FC = () => {
             </Filter>
         </Form>
 
-        
-
         <main>
             {listings.map(listing => (
                 <Link to="/details">
@@ -225,7 +221,7 @@ const Home: React.FC = () => {
                             </Price>
                         </HeaderCar>
 
-                        <img className="car" alt={listing.vehicle.model} src={Lambo} />
+                        <img className="car" alt={listing.vehicle.model} src={listing.vehicle.imgUrl} />
                         <img className="energy" alt="Energy" src={Energia} />
                     </Item>
                 </Link>

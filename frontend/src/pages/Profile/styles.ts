@@ -8,7 +8,7 @@ export const Container = styled.div`
 export const Header = styled.header`
     padding: 4rem;
     max-width: 100%;
-    height: 12rem;
+    height: 6rem;
     background-color: #1B1B1F;
     display: flex;
     flex-direction: column; 
@@ -34,6 +34,7 @@ export const Content = styled.div`
     align-items: center;
     flex-direction: column;
     height: 100vh;
+    margin-top: 48px;
 
     input {
     border: none;

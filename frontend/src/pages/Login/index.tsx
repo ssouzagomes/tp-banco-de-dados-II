@@ -8,7 +8,6 @@ import * as Yup from 'yup';
 import Button from '../../components/Button/index'
 import InputForm from '../../components/InputForm';
 
-// import { useAuth } from '../../hooks/auth';
 import api from '../../services/api'
 
 import {
@@ -16,7 +15,6 @@ import {
   Content,
   BackButton,
   FormContainer,
-  ForgotPasswordContainer,
   ButtonContainer
 } from './styles';
 
@@ -29,7 +27,6 @@ const Login: React.FC = () => {
 
   const formRef = useRef<FormHandles>(null);
   const history = useHistory();
-  // const { signIn } = useAuth();
 
   const signIn = useCallback(async ({ email, password }) => {
     const data = { email, password }
@@ -110,12 +107,6 @@ const Login: React.FC = () => {
                 labelName="Senha"
                 placeholder="Senha"
               />
-
-              {/* <ForgotPasswordContainer>
-                <Link to='#'>
-                  Esqueci minha senha
-                </Link>
-              </ForgotPasswordContainer> */}
               
               <ButtonContainer>
                 <Button type="submit">Entrar</Button>

@@ -65,7 +65,7 @@ exports.forgot_password = async function(req,res) {
 };
 
 exports.reset_password = async function(req,res) {
-  const { email, token, password } = req.body;
+  const { email, id, password } = req.body;
 
   try {
     const user = await User.findOne({ email })
@@ -74,7 +74,7 @@ exports.reset_password = async function(req,res) {
     if (!user)
       return res.status(400).send({ error: 'User not found' });
 
-    if (token !== user.passwordResetToken)
+    if (id !== user.passwordResetToken)
       return res.status(400).send({ error: 'Token invalid' });
 
     const now = new Date();

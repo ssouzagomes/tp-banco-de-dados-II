@@ -23,7 +23,7 @@ router.post('/forgot_password', async (req, res) => {
     auth.forgot_password(req,res);
 });
 
-router.post('/reset_password', async (req, res) => {
+router.put('/reset_password', async (req, res) => {
     auth.reset_password(req,res);
 });
 
