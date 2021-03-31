@@ -1,16 +1,13 @@
 const User = require('../models/user');
-const bcrypt = require('bcryptjs')
 
 exports.register = async function(req,res) {
-  const { email } = req.body;
+  const { email, password } = req.body;
 
   try {
     if (await User.findOne({ email }))
       return res.status(400).send({ error: 'User already exists' });
 
     const user = await User.create(req.body);
-
-    user.password = undefined;
 
     return res.send(user);
   } catch (err) {
@@ -26,7 +23,7 @@ exports.authenticate = async function(req,res) {
   if (!loggedUser)
     return res.status(400).send({ error: 'User not found' });
 
-  if (!await bcrypt.compare(password, loggedUser.password))
+  if (password, loggedUser.password)
     return res.status(400).send({ error: 'Invalid password' });
 
   loggedUser.password = undefined;
@@ -43,7 +40,7 @@ exports.reset_password = async function(req,res) {
     if (!user)
       return res.status(400).send({ error: 'User not found' });
 
-    if(await bcrypt.compare(password, user.password)){
+    if(password, user.password){
       user.password = newPassword;
     }
 
