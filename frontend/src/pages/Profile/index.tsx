@@ -1,8 +1,10 @@
-import React, { useRef } from 'react';
+import React, { useCallback, useRef } from 'react';
 import { Form } from '@unform/web';
 import { FormHandles } from '@unform/core';
 import { Link } from 'react-router-dom';
 import { FiArrowLeft, FiUser, FiMail, FiLock } from 'react-icons/fi';
+
+import * as Yup from 'yup';
 
 import InputForm from '../../components/InputForm';
 import Button from '../../components/Button';
@@ -11,9 +13,52 @@ import { Container, Header, BackButton, Content, User, FormContainer, ButtonCont
 
 import Photo from '../../assets/photo.png';
 import Camera from '../../assets/icons/camera.svg';
+import api from '../../services/api';
+import { useAuth } from '../../hooks/auth';
+
+interface ProfileFormData {
+    name: string;
+    email: string;
+    password: string;
+}
 
 const Profile: React.FC = () => {
     const formRef = useRef<FormHandles>(null);
+
+    const { user } = useAuth();
+
+    const handleSubmit = useCallback(
+        async (data: ProfileFormData) => {
+            try {
+                formRef.current?.setErrors({});
+
+                const schema = Yup.object().shape({
+                    name: Yup.string().required('Nome obrigatório.'),
+                    email: Yup.string().required('Email obrigatório.'),
+                    password: Yup.string().required('Senha obrigatória.'),
+                });
+
+                await schema.validate(data, {
+                    abortEarly: false,
+                });
+
+                const { name, email, password } = data;
+
+                const formData = {
+                    name,
+                    email,
+                    password
+                };
+
+                const response = await api.put('register', formData);
+
+            } catch (err) {
+                console.log('Erro detectado');
+            }
+        }, 
+        
+        [],
+    );
 
     return (
         <Container>
@@ -40,10 +85,10 @@ const Profile: React.FC = () => {
                     </button>
                 </User>
 
-                <Form ref={formRef} onSubmit={() => {}}>
+                <Form ref={formRef} onSubmit={handleSubmit}>
                     <FormContainer>
                         <InputForm
-                            name="nome"
+                            name="name"
                             icon={FiUser}
                             required={true}
                             labelName="Nome"
