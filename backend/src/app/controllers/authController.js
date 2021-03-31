@@ -23,7 +23,7 @@ exports.authenticate = async function(req,res) {
   if (!loggedUser)
     return res.status(400).send({ error: 'User not found' });
 
-  if (password, loggedUser.password)
+  if (password == loggedUser.password)
     return res.status(400).send({ error: 'Invalid password' });
 
   loggedUser.password = undefined;
