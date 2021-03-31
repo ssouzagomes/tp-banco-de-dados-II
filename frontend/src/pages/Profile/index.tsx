@@ -7,10 +7,14 @@ import { FiArrowLeft, FiUser, FiMail, FiLock } from 'react-icons/fi';
 import InputForm from '../../components/InputForm';
 import Button from '../../components/Button';
 
-import { Container, Header, BackButton, Content, User, FormContainer, ButtonContainer } from './styles';
-
-import Photo from '../../assets/photo.png';
-import Camera from '../../assets/icons/camera.svg';
+import { 
+    Container,
+    Header,
+    BackButton,
+    Content,
+    FormContainer,
+    ButtonContainer
+} from './styles';
 
 const Profile: React.FC = () => {
     const formRef = useRef<FormHandles>(null);
@@ -33,13 +37,6 @@ const Profile: React.FC = () => {
             </Header>
 
             <Content>
-                <User>
-                    <img className="user" src={Photo} alt="User"/>
-                    <button>
-                        <img className="camera" src={Camera} alt="Camera"/>
-                    </button>
-                </User>
-
                 <Form ref={formRef} onSubmit={() => {}}>
                     <FormContainer>
                         <InputForm
