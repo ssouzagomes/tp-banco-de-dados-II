@@ -12,10 +12,7 @@ exports.register = async function(req,res) {
 
     user.password = undefined;
 
-    return res.send({
-      user,
-      token: { id: user.id },
-    });
+    return res.send(user);
   } catch (err) {
     return res.status(400).send({ error: '' + err });
   }
@@ -38,7 +35,7 @@ exports.authenticate = async function(req,res) {
 };
 
 exports.reset_password = async function(req,res) {
-  const { email, id, password } = req.body;
+  const { email, password, newPassword } = req.body;
 
   try {
     const user = await User.findOne({ email });
@@ -46,19 +43,14 @@ exports.reset_password = async function(req,res) {
     if (!user)
       return res.status(400).send({ error: 'User not found' });
 
-    if (id !== user.passwordResetToken)
-      return res.status(400).send({ error: 'Token invalid' });
-
-    const now = new Date();
-
-    if (now > user.passwordResetExpires)
-      return res.status(400).send({ error: 'Token expired, generate a new one' });
-
-    user.password = password;
+    if(await bcrypt.compare(password, user.password)){
+      user.password = newPassword;
+    }
 
     await user.save();
 
     res.send();
+
   } catch (err) {
     res.status(400).send({ error: 'Cannot reset password, try again' });
   }
