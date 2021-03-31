@@ -32,10 +32,8 @@ const Login: React.FC = () => {
     const data = { email, password }
 
     const response = await api.post('/authenticate', data);
-    
-    const { loggedUser } = response.data;
 
-    localStorage.setItem('@RENTX:loggedUser', JSON.stringify(loggedUser))
+    localStorage.setItem('@RENTX:loggedUser', JSON.stringify(response.data))
   },[])
 
   const handleSubmit = useCallback(
@@ -61,6 +59,7 @@ const Login: React.FC = () => {
         }
 
         alert('Email ou senha inválido(s)!')
+        return
       }
     },
     [history, signIn],
