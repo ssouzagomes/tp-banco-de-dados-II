@@ -19,7 +19,7 @@ router.post('/authenticate', async (req, res) => {
     auth.authenticate(req,res);
 });
 
-router.put('/reset_password', async (req, res) => {
+router.put('/resetPassword', async (req, res) => {
     auth.reset_password(req,res);
 });
 

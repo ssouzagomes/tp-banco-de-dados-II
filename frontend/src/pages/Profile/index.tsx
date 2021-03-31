@@ -1,4 +1,5 @@
-import React, { useRef, useCallback, useState } from 'react';
+import React, { useRef, useCallback } from 'react';
+import { useHistory } from 'react-router-dom'
 import { Form } from '@unform/web';
 import { FormHandles } from '@unform/core';
 import { Link } from 'react-router-dom';
@@ -20,7 +21,6 @@ import {
 import api from '../../services/api';
 
 interface UserFormData {
-    name: string,
     email: string,
     password: string,
     newPassword: string
@@ -29,17 +29,20 @@ interface UserFormData {
 const Profile: React.FC = () => {
     const formRef = useRef<FormHandles>(null);
 
-    const [dataUser, setDataUser] = useState(() => {
-        const user = localStorage.getItem('@RENTX:loggedUser');
-    
-        if (user) {
-            return { user: JSON.parse(user) };
-        }
-    
-        return {};
-    });;
+    const history = useHistory();
 
-    console.log(dataUser.user.name)
+
+    // const [dataUser, setDataUser] = useState(() => {
+    //     const user = localStorage.getItem('@RENTX:loggedUser');
+    
+    //     if (user) {
+    //         return { user: JSON.parse(user) };
+    //     }
+    
+    //     return {};
+    // });;
+
+    // console.log(dataUser.user.name)
 
 
     const handleSubmit = useCallback(
@@ -48,7 +51,6 @@ const Profile: React.FC = () => {
             formRef.current?.setErrors({});
     
             const schema = Yup.object().shape({
-                name: Yup.string().required('Nome obrigatório'),
                 email: Yup.string().required('Email obrigatório'),
                 password: Yup.string().required('Senha obrigatória.'),
                 newPassword: Yup.string().required('Nova senha obrigatória.'),
@@ -57,20 +59,19 @@ const Profile: React.FC = () => {
             await schema.validate(data, {
                 abortEarly: false,
             });
-
-            if (data.name === dataUser.user.name &&
-                data.email === dataUser.user.email &&
-                data.password === dataUser.user.password) {
-                // await api.pu
-            }
     
-            // await api.put
-            
+            await api.put('resetPassword', data)
+
+            alert('Usuário editado com sucesso!')
+
+            history.push('/home')
           } catch (error) {
             console.log(error)
+
+            alert('Email ou senha inválido(s)!')
           }
         },
-        [],
+        [history],
     );
 
     return (
@@ -94,14 +95,6 @@ const Profile: React.FC = () => {
                 <Form ref={formRef} onSubmit={handleSubmit}>
                     <FormContainer>
                         <InputForm
-                            name="name"
-                            icon={FiUser}
-                            required={true}
-                            labelName="Nome"
-                            placeholder="Nome"
-                        />
-
-                        <InputForm
                             name="email"
                             type="email"
                             icon={FiMail}
@@ -120,7 +113,7 @@ const Profile: React.FC = () => {
                         />
 
                         <InputForm
-                            name="newPassowrd"
+                            name="newPassword"
                             type="password"
                             icon={FiLock}
                             required={true}
