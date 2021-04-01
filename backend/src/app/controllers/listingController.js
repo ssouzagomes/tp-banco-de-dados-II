@@ -49,11 +49,12 @@ exports.getListingsOnRequestedRange = async function(req, res){
   const { priceStart } = req.body
   const { priceEnd } = req.body
 
-  if(!endDate && endDate){
+  if(!startDate && endDate){
     return res.status(400).send({ error: 'Data de inico e fim nao especificada'});
   }
-
-  if(priceStart && priceEnd && transmission && fuel){ //Se todos os campos tem valor
+  console.log(startDate,endDate,fuel,transmission,priceStart,priceEnd);
+  if(priceStart >=0 && priceEnd >= 0 && transmission && fuel){ //Se todos os campos tem valor
+    console.log("todos tem valor");
     try {  
       const listings = await Listing.find().where('startDate').gte(startDate).
       where('endDate').lte(endDate).where('price').gte(priceStart).lte(priceEnd).populate('vehicle').lean();
@@ -61,12 +62,13 @@ exports.getListingsOnRequestedRange = async function(req, res){
       return res.send(listings.filter(
         function(x){
           return x.vehicle.transmission == transmission && x.vehicle.fuel == fuel
-        }).find(o => o.id === 1)
+        })
         );        
     } catch (err) {
       return res.status(400).send({ error: '' + err });
     }
-  }else if(priceStart && priceEnd && transmission){
+  }else if(priceStart >= 0 && priceEnd >= 0 && transmission){
+    console.log("preco e transmissao");
     try {
       const listings = await Listing.find().where('startDate').gte(startDate).
       where('endDate').lte(endDate).where('price').gte(priceStart).lte(priceEnd).populate('vehicle').lean();
@@ -74,12 +76,13 @@ exports.getListingsOnRequestedRange = async function(req, res){
       return res.send(listings.filter(
         function(x){
           return x.vehicle.transmission == transmission
-        }).find(o => o.id === 1)
+        })
         );        
     } catch (err) {
       return res.status(400).send({ error: '' + err });
     }
-  }else if(priceStart && priceEnd && fuel){
+  }else if(priceStart >= 0 && priceEnd >= 0 && fuel){
+    console.log("preco e combustivel");
     try {
       const listings = await Listing.find().where('startDate').gte(startDate).
       where('endDate').lte(endDate).where('price').gte(priceStart).lte(priceEnd).populate('vehicle').lean();
@@ -87,12 +90,13 @@ exports.getListingsOnRequestedRange = async function(req, res){
       return res.send(listings.filter(
         function(x){
           return x.vehicle.fuel == fuel
-        }).find(o => o.id === 1)
+        })
         );       
     } catch (err) {
       return res.status(400).send({ error: '' + err });
     }
   }else if(transmission && fuel){
+    console.log("transmissao e combustivel");
     try {
       const listings = await Listing.find().where('startDate').gte(startDate).
       where('endDate').lte(endDate).populate('vehicle').lean();
@@ -106,6 +110,7 @@ exports.getListingsOnRequestedRange = async function(req, res){
       return res.status(400).send({ error: '' + err });
     }
   }else if(fuel){
+    console.log("combustivel");
     try {
       const listings = await Listing.find().where('startDate').gte(startDate).
       where('endDate').lte(endDate).populate('vehicle').lean();
@@ -119,6 +124,7 @@ exports.getListingsOnRequestedRange = async function(req, res){
       return res.status(400).send({ error: '' + err });
     }
   }else if(transmission){
+    console.log("transmissao");
     try {
       const listings = await Listing.find().where('startDate').gte(startDate).
       where('endDate').lte(endDate).populate('vehicle').lean();
@@ -131,16 +137,18 @@ exports.getListingsOnRequestedRange = async function(req, res){
     } catch (err) {
       return res.status(400).send({ error: '' + err });
     }
-  }else if(priceStart && priceEnd){
+  }else if(priceStart >= 0 && priceEnd >= 0){
+    console.log("preço");
     try {
       const listings = await Listing.find().where('startDate').gte(startDate).
       where('endDate').lte(endDate).where('price').gte(priceStart).lte(priceEnd).populate('vehicle').lean();
 
-      return res.send(listings).find(o => o.id === 1);      
+      return res.send(listings)      
     } catch (err) {
       return res.status(400).send({ error: '' + err });
     }
   }else{
+    console.log("só data");
     try {
       const listings = await Listing.find().where('startDate').gte(startDate).
       where('endDate').lte(endDate).populate('vehicle');
@@ -150,4 +158,3 @@ exports.getListingsOnRequestedRange = async function(req, res){
   }
 }
 }
-
