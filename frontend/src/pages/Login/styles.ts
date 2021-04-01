@@ -71,5 +71,7 @@ export const ButtonContainer = styled.div`
   display: flex;
   justify-content: center;
 
+  outline: none;
+
   margin-top: 16px;
 `

@@ -1,12 +1,13 @@
-import React from 'react';
-import { Container, Header, BackButton, Content, Car, Info, Settings, Time, Total } from './styles';
+import React, { useState, useEffect } from 'react';
 import { FiArrowLeft, FiArrowRight } from 'react-icons/fi';
-import { Link } from 'react-router-dom';
+import { Link, useParams } from 'react-router-dom';
+import { format, parseISO } from 'date-fns';
+
+import api from '../../services/api'
 
 import Button from '../../components/Button';
 
 import Lambo from '../../assets/Lambo.png';
-
 import Cambio from '../../assets/icons/Cambio.svg';
 import Forcy from '../../assets/icons/Forca.svg';
 import Gasoliny from '../../assets/icons/Gasolina.svg';
@@ -14,7 +15,64 @@ import People from '../../assets/icons/Pessoas.svg';
 import Speed from '../../assets/icons/Speed.svg';
 import Vector from '../../assets/icons/Vector.svg';
 
+import {
+    Container,
+    Header,
+    BackButton,
+    Content,
+    Car,
+    Info,
+    Settings,
+    Time,
+    Total
+} from './styles';
+
+interface Params {
+    id: string;
+}
+
+interface Listing {
+    id: string,
+    price: number;
+    vehicle: {
+        model: string,
+        manufacturer: string,
+        acceleration: number,
+        fuel: string,
+        horsepower: string,
+        seats: number,
+        top_speed: number,
+        transmission: string,
+        imgUrl: string
+    };
+    startDate: Date;
+    endDate: Date;
+}
+
 const Details: React.FC = () => {
+    const params = useParams<Params>();
+
+    const [listing, setListings] = useState<Listing>()
+
+    useEffect(() => {
+        api.get(`getListing/${params.id}`).then(response => {
+
+            const formattedListing =  {
+                ...response.data,
+                startDate: format(
+                    parseISO(response.data.startDate),
+                    'MM/dd/yyyy',
+                ),
+              
+                endDate: format(
+                    parseISO(response.data.endDate),
+                    'MM/dd/yyyy',
+                ),
+            };
+
+            setListings(formattedListing);
+        });
+    }, [params.id]);
 
     return (
         <Container>
@@ -30,80 +88,95 @@ const Details: React.FC = () => {
                     </Link>
                 </BackButton>
             </Header>
-            <Content>
-                <Car>
-                    <img src={Lambo} alt="Lambo"/>
-                </Car>
-                <Info>
-                    <div className="name">
-                        <small>LAMBORGHINI</small>
-                        <span>Huracan</span>
-                    </div>
 
-                    <div className="price">
-                        <small>AO DIA</small>
-                        <span>R$ 580</span>
-                    </div>
-                </Info>
+            {listing !== undefined ? 
+                <Content>
+                    <Car>
+                        <img src={Lambo} alt="Lambo"/>
+                    </Car>
 
-                <Settings>
-                    <div>
-                        <img src={Speed} alt=""/>
-                        <small>380 Km/h</small>
-                    </div>
+                    <Info>
+                        <div className="name">
+                            <small>{listing?.vehicle.manufacturer}</small>
+                            <span>{listing?.vehicle.model}</span>
+                        </div>
 
-                    <div>
-                        <img src={Vector} alt=""/>
-                        <small>3.2s</small>
-                    </div>
+                        <div className="price">
+                            <small>AO DIA</small>
+                            <span>R$ {listing?.price}</span>
+                        </div>
+                    </Info>
 
-                    <div>
-                        <img src={Forcy} alt=""/>
-                        <small>800 HP</small>
-                    </div>
-                    
-                    <div>
-                        <img src={Gasoliny} alt=""/>
-                        <small>Gasolina</small>
-                    </div>
+                    <Settings>
+                        <div>
+                            <img src={Speed} alt="Speed"/>
+                            <small>{listing?.vehicle.top_speed} Km/h</small>
+                        </div>
 
-                    <div>
-                        <img src={Cambio} alt=""/>
-                        <small>Auto</small>
-                    </div>
+                        <div>
+                            <img src={Vector} alt="Vector"/>
+                            <small>{listing?.vehicle.acceleration}s</small>
+                        </div>
 
-                    <div>
-                        <img src={People} alt=""/>
-                        <small>2 pessoas</small>
-                    </div>
-                </Settings>
+                        <div>
+                            <img src={Forcy} alt="Forcy"/>
+                            <small>{listing?.vehicle.horsepower} HP</small>
+                        </div>
+                        
+                        <div>
+                            <img src={Gasoliny} alt="Fuel"/>
+                            <small>{listing?.vehicle.fuel}</small>
+                        </div>
 
-                <Time>
-                    <div className="de">
-                        <small>DE</small>
-                        <span>18 de Julho de 2020</span>
-                    </div>
-                    <div className="arrow">
-                        <br/>
-                        <FiArrowRight size={24}/>
-                    </div>
-                    <div className="for">
-                        <small>ATÉ</small>
-                        <span>20 de Julho de 2020</span>
-                    </div>
-                </Time>
+                        <div>
+                            <img src={Cambio} alt="Cambio"/>
+                            <small>{listing?.vehicle.transmission}</small>
+                        </div>
 
-                <Total>
-                    <small>TOTAL</small>
-                    <div>
-                        <span>R$ 580 x 3 diárias</span>
-                        <span>R$ 2.980</span>
-                        <Button>
-                            Alugar Agora
-                        </Button>
-                    </div>
-                </Total>
-            </Content>
+                        <div>
+                            <img src={People} alt="People"/>
+                            <small>5 pessoas</small>
+                        </div>
+                    </Settings>
+
+                    <Time>
+                        <div className="de">
+                            <small>DE</small>
+                            <span>{listing?.startDate}</span>
+                        </div>
+                        <div className="arrow">
+                            <br/>
+                            <FiArrowRight size={24}/>
+                        </div>
+                        <div className="for">
+                            <small>ATÉ</small>
+                            <span>{listing?.endDate}</span>
+                        </div>
+                    </Time>
+
+                    <Total>
+                        <small>TOTAL</small>
+                        <div>
+                            <span>R$ {`${listing?.price} x 
+                                ${
+                                    (Math.abs(Number(new Date(listing.endDate)) - Number(new Date(listing.startDate)))
+                                    / (1000 * 3600 * 24)).toFixed(0)
+                                }`} diárias
+                            </span>
+                            <span>R$ {
+                                listing.price *
+                                    (Number((Math.abs(Number(new Date(listing.endDate)) -
+                                        Number(new Date(listing.startDate))) / 
+                                            (1000 * 3600 * 24)).toFixed(0)))
+                            }, 00</span>
+                            <Button>
+                                Alugar Agora
+                            </Button>
+                        </div>
+                    </Total>
+                </Content>
+            : <p>Nenhum carro selecionado.</p>
+            }
         </Container>
     );
 }

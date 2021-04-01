@@ -22,7 +22,7 @@ const Routes = () => {
         <Route component={Listening} path="/listing" />
         <Route component={Schedule} path="/schedule" />
         <Route component={Profile} path="/profile" />
-        <Route component={Details} path="/details" />
+        <Route component={Details} path="/details/:id" />
       </Switch>
     </BrowserRouter>
   )

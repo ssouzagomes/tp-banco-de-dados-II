@@ -28,6 +28,14 @@ export const Container = styled.div`
         }
     }
 
+    button#item {
+        border: none;
+        background: none;
+        outline: none;
+
+        max-width: 20rem;
+    }
+
 `;
 
 export const Form = styled(Unform)`
@@ -67,7 +75,6 @@ export const Header = styled.header`
         padding-left: 0.8rem;
         border-radius: 0.6rem;
         border: none;
-        margin-top: 0.6rem;
     }
 `;
 
@@ -97,7 +104,6 @@ export const Title = styled.div`
 export const Filter = styled.div`
     padding-left: 4.8rem;
     padding-top: 4.2rem;
-   
 
     h2 {
         font-family: 'Archivo', sans-serif;
@@ -124,18 +130,19 @@ export const Search = styled.div`
 
     button {
         width: 8.5rem;
-        height: 2.2rem;
+        height: 2.4rem;
         background: #DC1637;
         color: #FFF;
         border: none;
-        border-radius: 0.8rem;
+        outline: none;
+        border-radius: 8px;
+
         cursor: pointer;
         font: 500 1rem Archivo;
 
         display: flex;
         align-items: center;
         justify-content: center;
-        margin-top: 0.6rem;
 
         transition: opacity 0.2s;
 
@@ -187,6 +194,8 @@ export const TitleCar = styled.div`
     display: flex;
     flex-direction: column;
 
+    text-align: left;
+
     span {
         font-family: 'Archivo';
         font-size: 10pt;
@@ -204,6 +213,8 @@ export const TitleCar = styled.div`
 export const Price = styled.div`
     display: flex;
     flex-direction: column;
+
+    text-align: left;
 
     span {
 
