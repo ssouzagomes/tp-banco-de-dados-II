@@ -2,11 +2,11 @@ const mongoose = require('../../database');
 const bcrypt = require('bcryptjs');
 
 const ScheduleSchema = new mongoose.Schema({
-  endDate: {
+  startDate: {
     type: Date,
     require: true,
   },
-  startDate: {
+  endDate: {
     type: Date,
     require: true,
   },
@@ -15,11 +15,11 @@ const ScheduleSchema = new mongoose.Schema({
     ref: 'User',
     require: true,
   },
-  listing: [{
+  listing: {
     type: mongoose.Schema.Types.ObjectId,
     ref: 'Listing',
     require: true,
-  }],
+  },
   createdAt: {
     type: Date,
     default: Date.now,

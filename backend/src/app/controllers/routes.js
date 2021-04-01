@@ -55,5 +55,12 @@ router.post('/createListing', async (req,res) =>{
     listing.createListing(req,res);
 })
 
+router.post('/createSchedule', async (req,res) =>{
+    schedule.createSchedule(req,res);
+})
+
+router.get('/getSchedules', async (req,res) =>{
+    schedule.getSchedules(req,res);
+})
 
 module.exports = app => app.use('/', router);

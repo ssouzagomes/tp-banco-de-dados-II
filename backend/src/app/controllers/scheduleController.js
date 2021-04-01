@@ -1,20 +1,22 @@
 const express = require('express');
 const Schedule = require('../models/schedule');
-const Listing = require('../models/listing')
-const authController = require('../controllers/authController');
+const Listing = require('../models/listing');
+const User = require("../models/user");
 
 exports.createSchedule = async function(req, res){
-    const selectedListing = req.body;
-    const currentUser = authController.loggedUser;
+    var { listing } = req.body;
+    var { user } = req.body;
+    const { startDate } = req.body;
+    const { endDate } = req.body;
     
     try{
-        if(!selectedListing || !currentUser)
-        return res.status(400).send({ error: 'Something went wrong...' });
+        if(!listing || !user)
+        return res.status(400).send({ error: 'No listing or user...' });
 
-        if( await Schedule.findOne({ currentUser } )) //resolve essa porra
-            return res.status(400).send({ error: 'User already scheduled' });
+        if( await Schedule.findOne({ listing, user } )) //resolve essa porra
+            return res.status(400).send({ error: 'Schedule already exists' });
         
-        const schedule = await Schedule.create(selectedListing, currentUser);
+        const schedule = await Schedule.create(req.body);
         return res.send(schedule);
         
     }catch (err) {
@@ -22,14 +24,13 @@ exports.createSchedule = async function(req, res){
       }
 }
 
-exports.showSchedules = async function(req, res){
-    const currentUser = authController.loggedUser;
-    
+exports.getSchedules = async function(req, res){
+    const { user } = req.body;
     try{
-        if(!currentUser)
+        if(!user)
             return res.status(400).send({ error: 'Something went wrong...' });
         
-        const schedules = await Schedule.findOne({ currentUser });
+        const schedules = await Schedule.findOne({user}).populate('user').populate({path: 'listing' , populate: {path: 'vehicle'}});
 
         if(!schedules)
             return res.status(400).send({ error: 'No schedules' });
