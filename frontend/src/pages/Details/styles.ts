@@ -38,8 +38,6 @@ export const Car = styled.div`
             height: 6.2rem;
         }
     }
-
-    
 `;
 
 export const Info = styled.div`
@@ -136,9 +134,6 @@ export const Settings = styled.div`
 
         }
     }
-
-
-
 `;
 
 export const Time = styled.div`
@@ -157,8 +152,6 @@ export const Time = styled.div`
             font-size: 12pt;
             margin-bottom: 12px;
         }
-
-        
 
         span {
             font-family: 'Archivo';
@@ -202,12 +195,9 @@ export const Total = styled.div`
             display: flex;
             flex-direction: column;
         }
-
     }
 
     @media (min-width: 300px) and (max-width: 700px) {
         height: 25vh;
     }
-
-    
 `;

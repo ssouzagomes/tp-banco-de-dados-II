@@ -19,6 +19,8 @@ export const Container = styled.button`
   font-size: 18px;
   transition: background-color 0.2s;
   
+  outline: none;
+
   &:hover {
     background: ${shade(0.1, '#be1637')};
   }

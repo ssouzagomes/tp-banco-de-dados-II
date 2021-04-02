@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { FiArrowLeft, FiArrowRight } from 'react-icons/fi';
-import { Link, useParams } from 'react-router-dom';
+import { Link, useParams, useHistory } from 'react-router-dom';
 import { format, parseISO } from 'date-fns';
 
 import api from '../../services/api'
@@ -32,7 +32,7 @@ interface Params {
 }
 
 interface Listing {
-    id: string,
+    _id: string,
     price: number;
     vehicle: {
         model: string,
@@ -51,8 +51,19 @@ interface Listing {
 
 const Details: React.FC = () => {
     const params = useParams<Params>();
+    const history = useHistory();
 
     const [listing, setListings] = useState<Listing>()
+
+    const [data, setData] = useState(() => {
+        const user = localStorage.getItem('@RENTX:loggedUser');
+    
+        if (user) {
+            return { user: JSON.parse(user) };
+        }
+    
+        return {};
+    });
 
     useEffect(() => {
         api.get(`getListing/${params.id}`).then(response => {
@@ -73,6 +84,23 @@ const Details: React.FC = () => {
             setListings(formattedListing);
         });
     }, [params.id]);
+
+    async function handleToCreateSchedule(user: string, listing: string) {
+        try {
+            await api.post('createSchedule', {
+                user: user,
+                listing: listing
+            })
+
+            alert('Carro alugado com sucesso!\nVerifique a página de agendamentos.')
+
+            history.push('/home')
+        } catch (error) {
+            console.log(error)
+
+            alert('Falha ao agendar! Tente novamente.')
+        }
+    }
 
     return (
         <Container>
@@ -159,8 +187,9 @@ const Details: React.FC = () => {
                         <div>
                             <span>R$ {`${listing?.price} x 
                                 ${
-                                    (Math.abs(Number(new Date(listing.endDate)) - Number(new Date(listing.startDate)))
-                                    / (1000 * 3600 * 24)).toFixed(0)
+                                    (Math.abs(Number(new Date(listing.endDate)) -
+                                        Number(new Date(listing.startDate))) /
+                                            (1000 * 3600 * 24)).toFixed(0)
                                 }`} diárias
                             </span>
                             <span>R$ {
@@ -169,7 +198,7 @@ const Details: React.FC = () => {
                                         Number(new Date(listing.startDate))) / 
                                             (1000 * 3600 * 24)).toFixed(0)))
                             }, 00</span>
-                            <Button>
+                            <Button onClick={() => handleToCreateSchedule(data.user._id, listing._id)}>
                                 Alugar Agora
                             </Button>
                         </div>

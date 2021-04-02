@@ -21,7 +21,7 @@ exports.createSchedule = async function(req, res){
         
     }catch (err) {
         return res.status(400).send({ error: '' + err });
-      }
+    }
 }
 
 exports.getSchedules = async function(req, res){
@@ -39,5 +39,5 @@ exports.getSchedules = async function(req, res){
         
     }catch (err) {
         return res.status(400).send({ error: '' + err });
-      }
+    }
 }

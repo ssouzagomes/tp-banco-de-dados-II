@@ -43,7 +43,7 @@ router.get('/getListings', async (req,res) => {
     listing.getListings(req,res);
 })
 
-router.get('/getListingsOnRequestedRange', async (req,res) => {
+router.post('/getListingsOnRequestedRange', async (req,res) => {
     listing.getListingsOnRequestedRange(req,res);
 })
 
