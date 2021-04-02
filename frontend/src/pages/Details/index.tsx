@@ -169,7 +169,7 @@ const Details: React.FC = () => {
                     <Time>
                         <div className="de">
                             <small>DE</small>
-                            <span>{listing?.startDate}</span>
+                            <span>{format(new Date(listing?.startDate), 'dd/MM/yyyy')}</span>
                         </div>
                         <div className="arrow">
                             <br/>
@@ -177,7 +177,7 @@ const Details: React.FC = () => {
                         </div>
                         <div className="for">
                             <small>ATÉ</small>
-                            <span>{listing?.endDate}</span>
+                            <span>{format(new Date(listing?.endDate), 'dd/MM/yyyy')}</span>
                         </div>
                     </Time>
 
