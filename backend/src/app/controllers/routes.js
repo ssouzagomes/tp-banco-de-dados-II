@@ -59,7 +59,7 @@ router.post('/createSchedule', async (req,res) =>{
     schedule.createSchedule(req,res);
 })
 
-router.get('/getSchedules', async (req,res) =>{
+router.post('/getSchedules', async (req,res) =>{
     schedule.getSchedules(req,res);
 })
 

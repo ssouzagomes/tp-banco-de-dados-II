@@ -6,33 +6,19 @@ export const Container = styled.div`
     width: 100vw;
     height: 100vh;
 
-    > main {
+    main {
         margin: 3.2rem auto;
         width: 90%;
-    }
 
-    @media (min-width: 700px) {
-        max-width: 100%;
-
-        main {
-            padding: 3.2rem 0;
-            margin: 0 auto;
-        }
-
-        .items {
-            display: grid;
-            grid-template-columns: repeat(3, 400px);
-            width: 100%;
-        }
-    
-    }
-
-    main .card {
         display: flex;
-        flex-direction: column;
+        flex-direction: row;
     }
 
-    main .card .period {
+    main .items {
+        margin-right: 48px;
+    }
+
+    main .period {
         width: 20rem;
         height: 2rem;
         font-size: 14px;
@@ -74,7 +60,6 @@ export const Header = styled.header`
     }
 
 `;
-
 
 export const Form = styled(Unform)`
     
@@ -129,10 +114,75 @@ export const Form = styled(Unform)`
            width: 24px;
         }
     }
-
-
-    
-
-   
 `;
 
+export const Item = styled.div`
+    width: 20rem;
+    height: 12rem;
+    cursor: pointer;
+    background-color: #EBEBF0;
+    border-radius: 4px;
+    padding: 0.8rem;
+    transition: border 0.2s;
+    
+    &:hover {
+        border: solid 2px  #DC1637;
+    }
+
+    .car {
+        width: 16rem;
+        margin-top: 0.6rem;
+    }
+
+    .energy {
+        width: 2rem;
+    }
+`;
+
+export const HeaderCar = styled.div`
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+`;
+
+export const TitleCar = styled.div`
+    display: flex;
+    flex-direction: column;
+
+    text-align: left;
+
+    span {
+        font-family: 'Archivo';
+        font-size: 10pt;
+        color: #AEAEB3;
+    }
+
+    strong {
+        font-family: 'Archivo';
+        font-size: 1.6rem;
+        font-weight: 400;
+        color: #000;
+    }
+`;
+
+export const Price = styled.div`
+    display: flex;
+    flex-direction: column;
+
+    text-align: left;
+
+    span {
+
+        font-family: 'Archivo';
+        font-size: 10pt;
+        color: #AEAEB3;  
+    }
+
+    strong {
+        font-family: 'Archivo';
+        font-size: 1.6rem;
+        font-weight: 600;
+        color: #DC1637;
+    }
+
+`;
