@@ -1,7 +1,5 @@
 import { Switch, Route, BrowserRouter } from 'react-router-dom'
 
-// import Route from './Route'
-
 import Welcome from '../pages/Welcome'
 import Home from '../pages/Home';
 import Login from '../pages/Login'
