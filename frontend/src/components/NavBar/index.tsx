@@ -32,10 +32,6 @@ const NavBar: React.FC = () => {
         <Container>
             <div>
                 <Link to="/home">
-                    <img src={House} alt="House"/>
-                </Link>
-
-                <Link to="/listing">
                     <img src={Car} alt="Car"/>
                 </Link>
 

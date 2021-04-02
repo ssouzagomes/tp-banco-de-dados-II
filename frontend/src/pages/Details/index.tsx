@@ -43,7 +43,6 @@ interface Listing {
         seats: number,
         top_speed: number,
         transmission: string,
-        imgUrl: string
     };
     startDate: Date;
     endDate: Date;
