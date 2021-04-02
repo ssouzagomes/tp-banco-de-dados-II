@@ -13,7 +13,7 @@ exports.createSchedule = async function(req, res){
         if(!listing || !user)
         return res.status(400).send({ error: 'No listing or user...' });
 
-        if( await Schedule.findOne({ listing, user } )) //resolve essa porra
+        if( await Schedule.findOne({ listing, user } )) 
             return res.status(400).send({ error: 'Schedule already exists' });
         
         const schedule = await Schedule.create(req.body);
@@ -21,7 +21,7 @@ exports.createSchedule = async function(req, res){
         
     }catch (err) {
         return res.status(400).send({ error: '' + err });
-    }
+      }
 }
 
 exports.getSchedules = async function(req, res){
@@ -30,7 +30,7 @@ exports.getSchedules = async function(req, res){
         if(!user)
             return res.status(400).send({ error: 'Something went wrong...' });
         
-        const schedules = await Schedule.findOne({user}).populate('user').populate({path: 'listing' , populate: {path: 'vehicle'}});
+        const schedules = await Schedule.find({user}).populate('user').populate({path: 'listing' , populate: {path: 'vehicle'}});
 
         if(!schedules)
             return res.status(400).send({ error: 'No schedules' });
@@ -39,5 +39,5 @@ exports.getSchedules = async function(req, res){
         
     }catch (err) {
         return res.status(400).send({ error: '' + err });
-    }
+      }
 }
