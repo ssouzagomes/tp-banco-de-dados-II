@@ -34,6 +34,7 @@ export const Container = styled.div`
         outline: none;
 
         max-width: 20rem;
+        margin-bottom: 2rem;
     }
 
 `;
