@@ -40,7 +40,7 @@ interface Listing {
 interface ListingFormData {
     startDate: Date;
     endDate: Date;
-    price?: string
+    price: string
     fuel?: string,
     transmission?: string,
 }
@@ -52,8 +52,6 @@ const Home: React.FC = () => {
     const [listings, setListings] = useState<Listing[]>([])
     const [startDate, setStartDate] = useState<Date>()
     const [endDate, setEndDate] = useState<Date>()
-    const [priceStart, setPriceStart] = useState<number>(0)
-    const [priceEnd, setPriceEnd] = useState<number>(0)
 
     const [switchListing, setSwitchListing] = useState<number>(0)
 
@@ -75,36 +73,41 @@ const Home: React.FC = () => {
             
             const parseStartDate = format(data.startDate, 'MM/dd/yyyy')
             const parseEndDate = format(data.endDate, 'MM/dd/yyyy')
+
+            let priceStart = 0
+            let priceEnd = 0
             
             switch (data.price) {
                 case '0':
-                    setPriceStart(50)
-                    setPriceEnd(100)
+                    priceStart = 50
+                    priceEnd = 100
                     break;
 
                 case '1':
-                    setPriceStart(100)
-                    setPriceEnd(150)
+                    priceStart = 100
+                    priceEnd = 150
                     break;
 
                 case '2':
-                    setPriceStart(150)
-                    setPriceEnd(200)
+                    priceStart = 150
+                    priceEnd = 200
                 break;
                 
                 case '3':
-                    setPriceStart(200)
-                    setPriceEnd(250)
+                    priceStart = 200
+                    priceEnd = 250
                     break;
                     
                 case '4':
-                    setPriceStart(250)
-                    setPriceEnd(1000)
+                    priceStart = 250
+                    priceEnd = 1000
                     break;
                     
                 default:
                     break;
             }
+
+            console.log(parseStartDate, parseEndDate, data.fuel, data.transmission, priceStart, priceEnd)
 
             await api.post('getListingsOnRequestedRange', {
                 startDate: parseStartDate,
@@ -114,18 +117,13 @@ const Home: React.FC = () => {
                 priceStart: priceStart,
                 priceEnd: priceEnd
             }).then(response => {
-                if(response.data !== undefined){
-                    setSwitchListing(1)
-                    setListings(response.data)
-                }
-                else
-                    setListings([])
+                setListings(response.data)
             })
           } catch (error) {
             console.log(error)
           }
         },
-        [priceStart, priceEnd],
+        [],
     );
 
     const handleRedirectToDetails = useCallback(
@@ -134,6 +132,8 @@ const Home: React.FC = () => {
         },
         [history],
     );
+
+    console.log(switchListing)
 
     return (
         <Container>
@@ -211,7 +211,7 @@ const Home: React.FC = () => {
                             ]}
                         />
 
-                        <button type="submit">
+                        <button type="submit" onClick={() => setSwitchListing(1)}>
                             Confirmar
                         </button>
 
@@ -220,7 +220,7 @@ const Home: React.FC = () => {
             </Form>
 
             <main>
-                {listings !== undefined ?
+                {listings !== undefined || listings !== [] ?
                     ( listings.map(listing => (
                         <button id="item" onClick={() => handleRedirectToDetails(listing._id)}>
                             <Item>
@@ -241,7 +241,7 @@ const Home: React.FC = () => {
                             </Item>
                         </button>
                     )) )
-                    : <p>Ainda não há carros disponíveis...</p>
+                    : <p>Nenhum veículo encontrado...</p>
                 }
             </main>
         </Container>

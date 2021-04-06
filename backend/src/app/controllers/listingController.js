@@ -138,7 +138,7 @@ exports.getListingsOnRequestedRange = async function(req, res){
       return res.status(400).send({ error: '' + err });
     }
   }else if(priceStart >= 0 && priceEnd >= 0){
-    console.log("preço");
+    console.log("Preço: ", priceStart, priceEnd);
     try {
       const listings = await Listing.find().where('startDate').gte(startDate).
       where('endDate').lte(endDate).where('price').gte(priceStart).lte(priceEnd).populate('vehicle').lean();
