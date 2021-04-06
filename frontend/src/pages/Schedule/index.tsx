@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { format } from 'date-fns';
+import { AxiosRequestConfig } from 'axios'
 
 import NavBar from '../../components/NavBar';
 
@@ -51,9 +52,9 @@ const Home: React.FC = () => {
 
     useEffect(() => {
         async function loadSchedules() {
-            await api.post('getSchedules', {
+            await api.get('getSchedules', {
                 user: data.user._id
-            })
+            } as AxiosRequestConfig)
             .then(response => {
                 setSchedules(response.data)
             })

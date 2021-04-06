@@ -1,4 +1,5 @@
 import React, { useState, useRef, useEffect, useCallback } from 'react';
+import { AxiosRequestConfig } from 'axios';
 import { FormHandles } from '@unform/core';
 import { useHistory } from 'react-router-dom';
 import { format } from 'date-fns';
@@ -109,14 +110,14 @@ const Home: React.FC = () => {
 
             console.log(parseStartDate, parseEndDate, data.fuel, data.transmission, priceStart, priceEnd)
 
-            await api.post('getListingsOnRequestedRange', {
+            await api.get('getListingsOnRequestedRange', {
                 startDate: parseStartDate,
                 endDate: parseEndDate,
                 fuel: data.fuel,
                 transmission: data.transmission,
                 priceStart: priceStart,
                 priceEnd: priceEnd
-            }).then(response => {
+            } as AxiosRequestConfig).then(response => {
                 setListings(response.data)
             })
           } catch (error) {

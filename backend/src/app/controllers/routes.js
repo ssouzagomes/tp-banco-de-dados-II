@@ -43,7 +43,7 @@ router.get('/getListings', async (req,res) => {
     listing.getListings(req,res);
 })
 
-router.post('/getListingsOnRequestedRange', async (req,res) => {
+router.get('/getListingsOnRequestedRange', async (req,res) => {
     listing.getListingsOnRequestedRange(req,res);
 })
 
@@ -59,7 +59,7 @@ router.post('/createSchedule', async (req,res) =>{
     schedule.createSchedule(req,res);
 })
 
-router.post('/getSchedules', async (req,res) =>{
+router.get('/getSchedules', async (req,res) =>{
     schedule.getSchedules(req,res);
 })
 
