@@ -40,7 +40,7 @@ interface Listing {
 interface ListingFormData {
     startDate: Date;
     endDate: Date;
-    price: string
+    price?: string
     fuel?: string,
     transmission?: string,
 }
@@ -74,8 +74,8 @@ const Home: React.FC = () => {
             const parseStartDate = format(data.startDate, 'MM/dd/yyyy')
             const parseEndDate = format(data.endDate, 'MM/dd/yyyy')
 
-            let priceStart = 0
-            let priceEnd = 0
+            let priceStart = null
+            let priceEnd = null
             
             switch (data.price) {
                 case '0':
@@ -133,7 +133,7 @@ const Home: React.FC = () => {
         [history],
     );
 
-    console.log(switchListing)
+    console.log(listings)
 
     return (
         <Container>
@@ -221,7 +221,7 @@ const Home: React.FC = () => {
 
             <main>
                 {listings !== undefined || listings !== [] ?
-                    ( listings.map(listing => (
+                    listings.map(listing => (
                         <button id="item" onClick={() => handleRedirectToDetails(listing._id)}>
                             <Item>
                                 <HeaderCar>
@@ -240,8 +240,8 @@ const Home: React.FC = () => {
                                 <img className="energy" alt="Energy" src={Energia} />
                             </Item>
                         </button>
-                    )) )
-                    : <p>Nenhum veículo encontrado...</p>
+                    ))
+                :( <p>Nenhum veículo disponível...</p> )
                 }
             </main>
         </Container>
